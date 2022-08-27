@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1050956017338",
+    "project_id": "w8-pl8",
+    "storage_bucket": "w8-pl8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050956017338:android:af7cf8bf03c5b59faf9c83",
+        "android_client_info": {
+          "package_name": "com.blackwhaleapps.w8pl8"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050956017338-e485hvlq9ah1qdacltop4irf1kb7egrl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blackwhaleapps.w8pl8",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "1050956017338-ds3tnnkvk6uvkba7na2nmvqqblefd72j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBYuXQgw3zdMxzQuieyyO_sneDoIF_e2c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050956017338-ds3tnnkvk6uvkba7na2nmvqqblefd72j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1050956017338-iqa4867do919fc691pmd4behm4mgc8su.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.blackwhaleapps.w8pl8"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
