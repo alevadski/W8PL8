@@ -1,6 +1,7 @@
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../login/login_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -21,13 +22,13 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFFF1F4F8),
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         title: Text(
           'Welcome',
           style: FlutterFlowTheme.of(context).title1.override(
                 fontFamily: 'Outfit',
-                color: Color(0xFF0F1113),
+                color: FlutterFlowTheme.of(context).primaryText,
                 fontSize: 32,
                 fontWeight: FontWeight.w500,
               ),
@@ -36,7 +37,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
         centerTitle: false,
         elevation: 0,
       ),
-      backgroundColor: Color(0xFFF1F4F8),
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -81,7 +82,9 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                               .title2
                                               .override(
                                                 fontFamily: 'Outfit',
-                                                color: Color(0xFF0F1113),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
                                                 fontSize: 24,
                                                 fontWeight: FontWeight.w500,
                                               ),
@@ -102,7 +105,9 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                                 .bodyText2
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: Color(0xFF57636C),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
                                                   fontSize: 14,
                                                   fontWeight: FontWeight.normal,
                                                 ),
@@ -269,8 +274,18 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 16),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        duration: Duration(milliseconds: 300),
+                        reverseDuration: Duration(milliseconds: 300),
+                        child: LoginWidget(
+                          register: false,
+                        ),
+                      ),
+                    );
                   },
                   text: 'Login',
                   options: FFButtonOptions(
@@ -294,8 +309,18 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                 child: FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
+                  onPressed: () async {
+                    await Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        duration: Duration(milliseconds: 300),
+                        reverseDuration: Duration(milliseconds: 300),
+                        child: LoginWidget(
+                          register: true,
+                        ),
+                      ),
+                    );
                   },
                   text: 'Register',
                   options: FFButtonOptions(
