@@ -43,6 +43,13 @@ class _$ExercisesRecordSerializer
             specifiedType:
                 const FullType(BuiltList, const [const FullType(RepStruct)])));
     }
+    value = object.totalLifted;
+    if (value != null) {
+      result
+        ..add('total_lifted')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -80,6 +87,10 @@ class _$ExercisesRecordSerializer
                       BuiltList, const [const FullType(RepStruct)]))!
               as BuiltList<Object?>);
           break;
+        case 'total_lifted':
+          result.totalLifted = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -101,12 +112,15 @@ class _$ExercisesRecord extends ExercisesRecord {
   @override
   final BuiltList<RepStruct>? reps;
   @override
+  final double? totalLifted;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ExercisesRecord([void Function(ExercisesRecordBuilder)? updates]) =>
       (new ExercisesRecordBuilder()..update(updates))._build();
 
-  _$ExercisesRecord._({this.name, this.note, this.reps, this.ffRef})
+  _$ExercisesRecord._(
+      {this.name, this.note, this.reps, this.totalLifted, this.ffRef})
       : super._();
 
   @override
@@ -124,13 +138,15 @@ class _$ExercisesRecord extends ExercisesRecord {
         name == other.name &&
         note == other.note &&
         reps == other.reps &&
+        totalLifted == other.totalLifted &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, name.hashCode), note.hashCode), reps.hashCode),
+        $jc($jc($jc($jc(0, name.hashCode), note.hashCode), reps.hashCode),
+            totalLifted.hashCode),
         ffRef.hashCode));
   }
 
@@ -140,6 +156,7 @@ class _$ExercisesRecord extends ExercisesRecord {
           ..add('name', name)
           ..add('note', note)
           ..add('reps', reps)
+          ..add('totalLifted', totalLifted)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -162,6 +179,10 @@ class ExercisesRecordBuilder
       _$this._reps ??= new ListBuilder<RepStruct>();
   set reps(ListBuilder<RepStruct>? reps) => _$this._reps = reps;
 
+  double? _totalLifted;
+  double? get totalLifted => _$this._totalLifted;
+  set totalLifted(double? totalLifted) => _$this._totalLifted = totalLifted;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -176,6 +197,7 @@ class ExercisesRecordBuilder
       _name = $v.name;
       _note = $v.note;
       _reps = $v.reps?.toBuilder();
+      _totalLifted = $v.totalLifted;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -201,7 +223,11 @@ class ExercisesRecordBuilder
     try {
       _$result = _$v ??
           new _$ExercisesRecord._(
-              name: name, note: note, reps: _reps?.build(), ffRef: ffRef);
+              name: name,
+              note: note,
+              reps: _reps?.build(),
+              totalLifted: totalLifted,
+              ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {

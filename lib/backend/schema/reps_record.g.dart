@@ -39,6 +39,27 @@ class _$RepsRecordSerializer implements StructuredSerializer<RepsRecord> {
         ..add('count')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.totalLifted;
+    if (value != null) {
+      result
+        ..add('total_lifted')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.exerciseName;
+    if (value != null) {
+      result
+        ..add('exercise_name')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.timestamp;
+    if (value != null) {
+      result
+        ..add('timestamp')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -75,6 +96,18 @@ class _$RepsRecordSerializer implements StructuredSerializer<RepsRecord> {
           result.count = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'total_lifted':
+          result.totalLifted = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'exercise_name':
+          result.exerciseName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'timestamp':
+          result.timestamp = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -96,12 +129,25 @@ class _$RepsRecord extends RepsRecord {
   @override
   final int? count;
   @override
+  final double? totalLifted;
+  @override
+  final String? exerciseName;
+  @override
+  final DateTime? timestamp;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$RepsRecord([void Function(RepsRecordBuilder)? updates]) =>
       (new RepsRecordBuilder()..update(updates))._build();
 
-  _$RepsRecord._({this.exercise, this.weight, this.count, this.ffRef})
+  _$RepsRecord._(
+      {this.exercise,
+      this.weight,
+      this.count,
+      this.totalLifted,
+      this.exerciseName,
+      this.timestamp,
+      this.ffRef})
       : super._();
 
   @override
@@ -118,13 +164,23 @@ class _$RepsRecord extends RepsRecord {
         exercise == other.exercise &&
         weight == other.weight &&
         count == other.count &&
+        totalLifted == other.totalLifted &&
+        exerciseName == other.exerciseName &&
+        timestamp == other.timestamp &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, exercise.hashCode), weight.hashCode), count.hashCode),
+        $jc(
+            $jc(
+                $jc(
+                    $jc($jc($jc(0, exercise.hashCode), weight.hashCode),
+                        count.hashCode),
+                    totalLifted.hashCode),
+                exerciseName.hashCode),
+            timestamp.hashCode),
         ffRef.hashCode));
   }
 
@@ -134,6 +190,9 @@ class _$RepsRecord extends RepsRecord {
           ..add('exercise', exercise)
           ..add('weight', weight)
           ..add('count', count)
+          ..add('totalLifted', totalLifted)
+          ..add('exerciseName', exerciseName)
+          ..add('timestamp', timestamp)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -155,6 +214,18 @@ class RepsRecordBuilder implements Builder<RepsRecord, RepsRecordBuilder> {
   int? get count => _$this._count;
   set count(int? count) => _$this._count = count;
 
+  double? _totalLifted;
+  double? get totalLifted => _$this._totalLifted;
+  set totalLifted(double? totalLifted) => _$this._totalLifted = totalLifted;
+
+  String? _exerciseName;
+  String? get exerciseName => _$this._exerciseName;
+  set exerciseName(String? exerciseName) => _$this._exerciseName = exerciseName;
+
+  DateTime? _timestamp;
+  DateTime? get timestamp => _$this._timestamp;
+  set timestamp(DateTime? timestamp) => _$this._timestamp = timestamp;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -169,6 +240,9 @@ class RepsRecordBuilder implements Builder<RepsRecord, RepsRecordBuilder> {
       _exercise = $v.exercise;
       _weight = $v.weight;
       _count = $v.count;
+      _totalLifted = $v.totalLifted;
+      _exerciseName = $v.exerciseName;
+      _timestamp = $v.timestamp;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -192,7 +266,13 @@ class RepsRecordBuilder implements Builder<RepsRecord, RepsRecordBuilder> {
   _$RepsRecord _build() {
     final _$result = _$v ??
         new _$RepsRecord._(
-            exercise: exercise, weight: weight, count: count, ffRef: ffRef);
+            exercise: exercise,
+            weight: weight,
+            count: count,
+            totalLifted: totalLifted,
+            exerciseName: exerciseName,
+            timestamp: timestamp,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

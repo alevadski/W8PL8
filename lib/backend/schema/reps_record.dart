@@ -15,6 +15,14 @@ abstract class RepsRecord implements Built<RepsRecord, RepsRecordBuilder> {
 
   int? get count;
 
+  @BuiltValueField(wireName: 'total_lifted')
+  double? get totalLifted;
+
+  @BuiltValueField(wireName: 'exercise_name')
+  String? get exerciseName;
+
+  DateTime? get timestamp;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -23,7 +31,9 @@ abstract class RepsRecord implements Built<RepsRecord, RepsRecordBuilder> {
 
   static void _initializeBuilder(RepsRecordBuilder builder) => builder
     ..weight = 0
-    ..count = 0;
+    ..count = 0
+    ..totalLifted = 0.0
+    ..exerciseName = '';
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -54,6 +64,9 @@ Map<String, dynamic> createRepsRecordData({
   DocumentReference? exercise,
   int? weight,
   int? count,
+  double? totalLifted,
+  String? exerciseName,
+  DateTime? timestamp,
 }) {
   final firestoreData = serializers.toFirestore(
     RepsRecord.serializer,
@@ -61,7 +74,10 @@ Map<String, dynamic> createRepsRecordData({
       (r) => r
         ..exercise = exercise
         ..weight = weight
-        ..count = count,
+        ..count = count
+        ..totalLifted = totalLifted
+        ..exerciseName = exerciseName
+        ..timestamp = timestamp,
     ),
   );
 

@@ -42,6 +42,19 @@ class _$WorkoutsRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.totalLifted;
+    if (value != null) {
+      result
+        ..add('total_lifted')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.index;
+    if (value != null) {
+      result
+        ..add('index')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -77,6 +90,14 @@ class _$WorkoutsRecordSerializer
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'total_lifted':
+          result.totalLifted = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'index':
+          result.index = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -98,12 +119,22 @@ class _$WorkoutsRecord extends WorkoutsRecord {
   @override
   final String? name;
   @override
+  final double? totalLifted;
+  @override
+  final int? index;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$WorkoutsRecord([void Function(WorkoutsRecordBuilder)? updates]) =>
       (new WorkoutsRecordBuilder()..update(updates))._build();
 
-  _$WorkoutsRecord._({this.timestamp, this.note, this.name, this.ffRef})
+  _$WorkoutsRecord._(
+      {this.timestamp,
+      this.note,
+      this.name,
+      this.totalLifted,
+      this.index,
+      this.ffRef})
       : super._();
 
   @override
@@ -121,13 +152,20 @@ class _$WorkoutsRecord extends WorkoutsRecord {
         timestamp == other.timestamp &&
         note == other.note &&
         name == other.name &&
+        totalLifted == other.totalLifted &&
+        index == other.index &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, timestamp.hashCode), note.hashCode), name.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, timestamp.hashCode), note.hashCode),
+                    name.hashCode),
+                totalLifted.hashCode),
+            index.hashCode),
         ffRef.hashCode));
   }
 
@@ -137,6 +175,8 @@ class _$WorkoutsRecord extends WorkoutsRecord {
           ..add('timestamp', timestamp)
           ..add('note', note)
           ..add('name', name)
+          ..add('totalLifted', totalLifted)
+          ..add('index', index)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -158,6 +198,14 @@ class WorkoutsRecordBuilder
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
+  double? _totalLifted;
+  double? get totalLifted => _$this._totalLifted;
+  set totalLifted(double? totalLifted) => _$this._totalLifted = totalLifted;
+
+  int? _index;
+  int? get index => _$this._index;
+  set index(int? index) => _$this._index = index;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -172,6 +220,8 @@ class WorkoutsRecordBuilder
       _timestamp = $v.timestamp;
       _note = $v.note;
       _name = $v.name;
+      _totalLifted = $v.totalLifted;
+      _index = $v.index;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -195,7 +245,12 @@ class WorkoutsRecordBuilder
   _$WorkoutsRecord _build() {
     final _$result = _$v ??
         new _$WorkoutsRecord._(
-            timestamp: timestamp, note: note, name: name, ffRef: ffRef);
+            timestamp: timestamp,
+            note: note,
+            name: name,
+            totalLifted: totalLifted,
+            index: index,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

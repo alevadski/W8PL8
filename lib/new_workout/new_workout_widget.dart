@@ -24,9 +24,12 @@ class NewWorkoutWidget extends StatefulWidget {
 }
 
 class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
-  DateTime? datePicked;
   TextEditingController? textController1;
+
+  DateTime? datePicked;
+
   TextEditingController? textController2;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -173,6 +176,20 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                         ),
                         borderRadius: BorderRadius.circular(16),
                       ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                     style: FlutterFlowTheme.of(context).bodyText1,
                   ),
@@ -196,6 +213,20 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).secondaryText,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(16),
@@ -312,12 +343,13 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                         note: textController2!.text,
                       );
                       await widget.workoutId!.update(workoutsUpdateData);
+                      setState(() => FFAppState().workoutInProgress = true);
+                      setState(() =>
+                          FFAppState().currentWorkoutId = widget.workoutId);
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => WorkoutWidget(
-                            workoutId: widget.workoutId,
-                          ),
+                          builder: (context) => WorkoutWidget(),
                         ),
                       );
                     },
@@ -330,12 +362,14 @@ class _NewWorkoutWidgetState extends State<NewWorkoutWidget> {
                                 fontFamily: 'Poppins',
                                 color: Colors.white,
                               ),
+                      elevation: 2,
                       borderSide: BorderSide(
                         color: Colors.transparent,
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
+                    showLoadingIndicator: false,
                   ),
                 ),
               ],

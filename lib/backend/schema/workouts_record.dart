@@ -17,13 +17,20 @@ abstract class WorkoutsRecord
 
   String? get name;
 
+  @BuiltValueField(wireName: 'total_lifted')
+  double? get totalLifted;
+
+  int? get index;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(WorkoutsRecordBuilder builder) => builder
     ..note = ''
-    ..name = '';
+    ..name = ''
+    ..totalLifted = 0.0
+    ..index = 0;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('workouts');
@@ -50,6 +57,8 @@ Map<String, dynamic> createWorkoutsRecordData({
   DateTime? timestamp,
   String? note,
   String? name,
+  double? totalLifted,
+  int? index,
 }) {
   final firestoreData = serializers.toFirestore(
     WorkoutsRecord.serializer,
@@ -57,7 +66,9 @@ Map<String, dynamic> createWorkoutsRecordData({
       (w) => w
         ..timestamp = timestamp
         ..note = note
-        ..name = name,
+        ..name = name
+        ..totalLifted = totalLifted
+        ..index = index,
     ),
   );
 

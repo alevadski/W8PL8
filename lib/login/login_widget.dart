@@ -22,13 +22,21 @@ class LoginWidget extends StatefulWidget {
 
 class _LoginWidgetState extends State<LoginWidget> {
   TextEditingController? emailAddressController;
+
   TextEditingController? passwordController;
+
   late bool passwordVisibility;
+
   TextEditingController? passwordConfirmController;
+
   late bool passwordConfirmVisibility;
+
   TextEditingController? emailAddressLoginController;
+
   TextEditingController? passwordLoginController;
+
   late bool passwordLoginVisibility;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -169,6 +177,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
                                               filled: true,
                                               fillColor: Colors.white,
                                               contentPadding:
@@ -222,6 +247,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     BorderRadius.circular(8),
                                               ),
                                               focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                   color: Color(0x00000000),
                                                   width: 1,
@@ -458,6 +500,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
                                               filled: true,
                                               fillColor: Colors.white,
                                               contentPadding:
@@ -505,6 +564,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     BorderRadius.circular(8),
                                               ),
                                               focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                   color: Color(0x00000000),
                                                   width: 1,
@@ -578,6 +654,23 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     BorderRadius.circular(8),
                                               ),
                                               focusedBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              errorBorder: OutlineInputBorder(
+                                                borderSide: BorderSide(
+                                                  color: Color(0x00000000),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
                                                 borderSide: BorderSide(
                                                   color: Color(0x00000000),
                                                   width: 1,

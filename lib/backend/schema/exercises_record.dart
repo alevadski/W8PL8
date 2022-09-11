@@ -17,6 +17,9 @@ abstract class ExercisesRecord
 
   BuiltList<RepStruct>? get reps;
 
+  @BuiltValueField(wireName: 'total_lifted')
+  double? get totalLifted;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -26,7 +29,8 @@ abstract class ExercisesRecord
   static void _initializeBuilder(ExercisesRecordBuilder builder) => builder
     ..name = ''
     ..note = ''
-    ..reps = ListBuilder();
+    ..reps = ListBuilder()
+    ..totalLifted = 0.0;
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
       parent != null
@@ -57,6 +61,7 @@ abstract class ExercisesRecord
 Map<String, dynamic> createExercisesRecordData({
   String? name,
   String? note,
+  double? totalLifted,
 }) {
   final firestoreData = serializers.toFirestore(
     ExercisesRecord.serializer,
@@ -64,7 +69,8 @@ Map<String, dynamic> createExercisesRecordData({
       (e) => e
         ..name = name
         ..note = note
-        ..reps = null,
+        ..reps = null
+        ..totalLifted = totalLifted,
     ),
   );
 

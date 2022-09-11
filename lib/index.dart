@@ -7,3 +7,4 @@ export 'new_workout/new_workout_widget.dart' show NewWorkoutWidget;
 export 'login/login_widget.dart' show LoginWidget;
 export 'pick_exercise/pick_exercise_widget.dart' show PickExerciseWidget;
 export 'workout/workout_widget.dart' show WorkoutWidget;
+export 'statistics/statistics_widget.dart' show StatisticsWidget;
