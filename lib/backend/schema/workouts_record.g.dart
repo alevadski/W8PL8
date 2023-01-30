@@ -21,38 +21,38 @@ class _$WorkoutsRecordSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.timestamp;
+    value = object.date;
     if (value != null) {
       result
-        ..add('timestamp')
+        ..add('date')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
-    value = object.note;
+    value = object.duration;
     if (value != null) {
       result
-        ..add('note')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add('duration')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
-    value = object.name;
+    value = object.repetitions;
     if (value != null) {
       result
-        ..add('name')
+        ..add('repetitions')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(RepetitionStruct)])));
     }
     value = object.totalLifted;
     if (value != null) {
       result
-        ..add('total_lifted')
+        ..add('totalLifted')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.index;
+    value = object.totalExercises;
     if (value != null) {
       result
-        ..add('index')
+        ..add('totalExercises')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.ffRef;
@@ -78,24 +78,26 @@ class _$WorkoutsRecordSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'timestamp':
-          result.timestamp = serializers.deserialize(value,
+        case 'date':
+          result.date = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
-        case 'note':
-          result.note = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+        case 'duration':
+          result.duration = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+        case 'repetitions':
+          result.repetitions.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(RepetitionStruct)]))!
+              as BuiltList<Object?>);
           break;
-        case 'total_lifted':
+        case 'totalLifted':
           result.totalLifted = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
-        case 'index':
-          result.index = serializers.deserialize(value,
+        case 'totalExercises':
+          result.totalExercises = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
         case 'Document__Reference__Field':
@@ -113,15 +115,15 @@ class _$WorkoutsRecordSerializer
 
 class _$WorkoutsRecord extends WorkoutsRecord {
   @override
-  final DateTime? timestamp;
+  final DateTime? date;
   @override
-  final String? note;
+  final int? duration;
   @override
-  final String? name;
+  final BuiltList<RepetitionStruct>? repetitions;
   @override
   final double? totalLifted;
   @override
-  final int? index;
+  final int? totalExercises;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -129,11 +131,11 @@ class _$WorkoutsRecord extends WorkoutsRecord {
       (new WorkoutsRecordBuilder()..update(updates))._build();
 
   _$WorkoutsRecord._(
-      {this.timestamp,
-      this.note,
-      this.name,
+      {this.date,
+      this.duration,
+      this.repetitions,
       this.totalLifted,
-      this.index,
+      this.totalExercises,
       this.ffRef})
       : super._();
 
@@ -149,11 +151,11 @@ class _$WorkoutsRecord extends WorkoutsRecord {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is WorkoutsRecord &&
-        timestamp == other.timestamp &&
-        note == other.note &&
-        name == other.name &&
+        date == other.date &&
+        duration == other.duration &&
+        repetitions == other.repetitions &&
         totalLifted == other.totalLifted &&
-        index == other.index &&
+        totalExercises == other.totalExercises &&
         ffRef == other.ffRef;
   }
 
@@ -162,21 +164,21 @@ class _$WorkoutsRecord extends WorkoutsRecord {
     return $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, timestamp.hashCode), note.hashCode),
-                    name.hashCode),
+                $jc($jc($jc(0, date.hashCode), duration.hashCode),
+                    repetitions.hashCode),
                 totalLifted.hashCode),
-            index.hashCode),
+            totalExercises.hashCode),
         ffRef.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'WorkoutsRecord')
-          ..add('timestamp', timestamp)
-          ..add('note', note)
-          ..add('name', name)
+          ..add('date', date)
+          ..add('duration', duration)
+          ..add('repetitions', repetitions)
           ..add('totalLifted', totalLifted)
-          ..add('index', index)
+          ..add('totalExercises', totalExercises)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -186,25 +188,28 @@ class WorkoutsRecordBuilder
     implements Builder<WorkoutsRecord, WorkoutsRecordBuilder> {
   _$WorkoutsRecord? _$v;
 
-  DateTime? _timestamp;
-  DateTime? get timestamp => _$this._timestamp;
-  set timestamp(DateTime? timestamp) => _$this._timestamp = timestamp;
+  DateTime? _date;
+  DateTime? get date => _$this._date;
+  set date(DateTime? date) => _$this._date = date;
 
-  String? _note;
-  String? get note => _$this._note;
-  set note(String? note) => _$this._note = note;
+  int? _duration;
+  int? get duration => _$this._duration;
+  set duration(int? duration) => _$this._duration = duration;
 
-  String? _name;
-  String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
+  ListBuilder<RepetitionStruct>? _repetitions;
+  ListBuilder<RepetitionStruct> get repetitions =>
+      _$this._repetitions ??= new ListBuilder<RepetitionStruct>();
+  set repetitions(ListBuilder<RepetitionStruct>? repetitions) =>
+      _$this._repetitions = repetitions;
 
   double? _totalLifted;
   double? get totalLifted => _$this._totalLifted;
   set totalLifted(double? totalLifted) => _$this._totalLifted = totalLifted;
 
-  int? _index;
-  int? get index => _$this._index;
-  set index(int? index) => _$this._index = index;
+  int? _totalExercises;
+  int? get totalExercises => _$this._totalExercises;
+  set totalExercises(int? totalExercises) =>
+      _$this._totalExercises = totalExercises;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -217,11 +222,11 @@ class WorkoutsRecordBuilder
   WorkoutsRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _timestamp = $v.timestamp;
-      _note = $v.note;
-      _name = $v.name;
+      _date = $v.date;
+      _duration = $v.duration;
+      _repetitions = $v.repetitions?.toBuilder();
       _totalLifted = $v.totalLifted;
-      _index = $v.index;
+      _totalExercises = $v.totalExercises;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -243,14 +248,27 @@ class WorkoutsRecordBuilder
   WorkoutsRecord build() => _build();
 
   _$WorkoutsRecord _build() {
-    final _$result = _$v ??
-        new _$WorkoutsRecord._(
-            timestamp: timestamp,
-            note: note,
-            name: name,
-            totalLifted: totalLifted,
-            index: index,
-            ffRef: ffRef);
+    _$WorkoutsRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$WorkoutsRecord._(
+              date: date,
+              duration: duration,
+              repetitions: _repetitions?.build(),
+              totalLifted: totalLifted,
+              totalExercises: totalExercises,
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'repetitions';
+        _repetitions?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'WorkoutsRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

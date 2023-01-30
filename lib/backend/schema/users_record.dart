@@ -25,6 +25,40 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'phone_number')
   String? get phoneNumber;
 
+  String? get adId;
+
+  String? get name;
+
+  String? get userName;
+
+  int? get gender;
+
+  DateTime? get dateOfBirth;
+
+  int? get height;
+
+  double? get weight;
+
+  String? get country;
+
+  String? get city;
+
+  String? get bodyType;
+
+  String? get experience;
+
+  bool? get isMetricUnit;
+
+  bool? get isPremium;
+
+  DateTime? get registeredAt;
+
+  BuiltList<SupplementIntakeStruct>? get supplementIntakes;
+
+  SupplementsStruct get supplements;
+
+  GoalsStruct get goals;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -34,7 +68,22 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..displayName = ''
     ..photoUrl = ''
     ..uid = ''
-    ..phoneNumber = '';
+    ..phoneNumber = ''
+    ..adId = ''
+    ..name = ''
+    ..userName = ''
+    ..gender = 0
+    ..height = 0
+    ..weight = 0.0
+    ..country = ''
+    ..city = ''
+    ..bodyType = ''
+    ..experience = ''
+    ..isMetricUnit = false
+    ..isPremium = false
+    ..supplementIntakes = ListBuilder()
+    ..supplements = SupplementsStructBuilder()
+    ..goals = GoalsStructBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -64,6 +113,22 @@ Map<String, dynamic> createUsersRecordData({
   String? uid,
   DateTime? createdTime,
   String? phoneNumber,
+  String? adId,
+  String? name,
+  String? userName,
+  int? gender,
+  DateTime? dateOfBirth,
+  int? height,
+  double? weight,
+  String? country,
+  String? city,
+  String? bodyType,
+  String? experience,
+  bool? isMetricUnit,
+  bool? isPremium,
+  DateTime? registeredAt,
+  SupplementsStruct? supplements,
+  GoalsStruct? goals,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -74,9 +139,32 @@ Map<String, dynamic> createUsersRecordData({
         ..photoUrl = photoUrl
         ..uid = uid
         ..createdTime = createdTime
-        ..phoneNumber = phoneNumber,
+        ..phoneNumber = phoneNumber
+        ..adId = adId
+        ..name = name
+        ..userName = userName
+        ..gender = gender
+        ..dateOfBirth = dateOfBirth
+        ..height = height
+        ..weight = weight
+        ..country = country
+        ..city = city
+        ..bodyType = bodyType
+        ..experience = experience
+        ..isMetricUnit = isMetricUnit
+        ..isPremium = isPremium
+        ..registeredAt = registeredAt
+        ..supplementIntakes = null
+        ..supplements = SupplementsStructBuilder()
+        ..goals = GoalsStructBuilder(),
     ),
   );
+
+  // Handle nested data for "supplements" field.
+  addSupplementsStructData(firestoreData, supplements, 'supplements');
+
+  // Handle nested data for "goals" field.
+  addGoalsStructData(firestoreData, goals, 'goals');
 
   return firestoreData;
 }

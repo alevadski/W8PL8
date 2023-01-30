@@ -1,14 +1,14 @@
 import 'package:built_value/serializer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../auth/auth_util.dart';
 
 import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/users_record.dart';
+import 'schema/supplement_types_record.dart';
+import 'schema/preset_exercises_record.dart';
 import 'schema/workouts_record.dart';
-import 'schema/exercises_record.dart';
-import 'schema/exercise_list_record.dart';
-import 'schema/reps_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -17,12 +17,21 @@ export 'schema/index.dart';
 export 'schema/serializers.dart';
 
 export 'schema/users_record.dart';
+export 'schema/supplement_types_record.dart';
+export 'schema/preset_exercises_record.dart';
 export 'schema/workouts_record.dart';
-export 'schema/exercises_record.dart';
-export 'schema/exercise_list_record.dart';
-export 'schema/reps_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
+Future<int> queryUsersRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      UsersRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
 Stream<List<UsersRecord>> queryUsersRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -64,14 +73,130 @@ Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
       isStream: isStream,
     );
 
-/// Functions to query WorkoutsRecords (as a Stream and as a Future).
-Stream<List<WorkoutsRecord>> queryWorkoutsRecord({
+/// Functions to query SupplementTypesRecords (as a Stream and as a Future).
+Future<int> querySupplementTypesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      SupplementTypesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<SupplementTypesRecord>> querySupplementTypesRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      WorkoutsRecord.collection,
+      SupplementTypesRecord.collection,
+      SupplementTypesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<SupplementTypesRecord>> querySupplementTypesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      SupplementTypesRecord.collection,
+      SupplementTypesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<SupplementTypesRecord>> querySupplementTypesRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      SupplementTypesRecord.collection,
+      SupplementTypesRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query PresetExercisesRecords (as a Stream and as a Future).
+Future<int> queryPresetExercisesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PresetExercisesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<PresetExercisesRecord>> queryPresetExercisesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PresetExercisesRecord.collection,
+      PresetExercisesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PresetExercisesRecord>> queryPresetExercisesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PresetExercisesRecord.collection,
+      PresetExercisesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<PresetExercisesRecord>> queryPresetExercisesRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      PresetExercisesRecord.collection,
+      PresetExercisesRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query WorkoutsRecords (as a Stream and as a Future).
+Future<int> queryWorkoutsRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      WorkoutsRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<WorkoutsRecord>> queryWorkoutsRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      WorkoutsRecord.collection(parent),
       WorkoutsRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
@@ -79,12 +204,13 @@ Stream<List<WorkoutsRecord>> queryWorkoutsRecord({
     );
 
 Future<List<WorkoutsRecord>> queryWorkoutsRecordOnce({
+  DocumentReference? parent,
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      WorkoutsRecord.collection,
+      WorkoutsRecord.collection(parent),
       WorkoutsRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
@@ -92,13 +218,14 @@ Future<List<WorkoutsRecord>> queryWorkoutsRecordOnce({
     );
 
 Future<FFFirestorePage<WorkoutsRecord>> queryWorkoutsRecordPage({
+  DocumentReference? parent,
   Query Function(Query)? queryBuilder,
   DocumentSnapshot? nextPageMarker,
   required int pageSize,
   required bool isStream,
 }) =>
     queryCollectionPage(
-      WorkoutsRecord.collection,
+      WorkoutsRecord.collection(parent),
       WorkoutsRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
@@ -106,137 +233,21 @@ Future<FFFirestorePage<WorkoutsRecord>> queryWorkoutsRecordPage({
       isStream: isStream,
     );
 
-/// Functions to query ExercisesRecords (as a Stream and as a Future).
-Stream<List<ExercisesRecord>> queryExercisesRecord({
-  DocumentReference? parent,
+Future<int> queryCollectionCount(
+  Query collection, {
   Query Function(Query)? queryBuilder,
   int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      ExercisesRecord.collection(parent),
-      ExercisesRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) {
+  final builder = queryBuilder ?? (q) => q;
+  var query = builder(collection);
+  if (limit > 0) {
+    query = query.limit(limit);
+  }
 
-Future<List<ExercisesRecord>> queryExercisesRecordOnce({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      ExercisesRecord.collection(parent),
-      ExercisesRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<ExercisesRecord>> queryExercisesRecordPage({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      ExercisesRecord.collection(parent),
-      ExercisesRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query ExerciseListRecords (as a Stream and as a Future).
-Stream<List<ExerciseListRecord>> queryExerciseListRecord({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      ExerciseListRecord.collection,
-      ExerciseListRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<ExerciseListRecord>> queryExerciseListRecordOnce({
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      ExerciseListRecord.collection,
-      ExerciseListRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<ExerciseListRecord>> queryExerciseListRecordPage({
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      ExerciseListRecord.collection,
-      ExerciseListRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query RepsRecords (as a Stream and as a Future).
-Stream<List<RepsRecord>> queryRepsRecord({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      RepsRecord.collection(parent),
-      RepsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<RepsRecord>> queryRepsRecordOnce({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      RepsRecord.collection(parent),
-      RepsRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<RepsRecord>> queryRepsRecordPage({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      RepsRecord.collection(parent),
-      RepsRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
+  return query.count().get().catchError((err) {
+    print('Error querying $collection: $err');
+  }).then((value) => value.count);
+}
 
 Stream<List<T>> queryCollection<T>(Query collection, Serializer<T> serializer,
     {Query Function(Query)? queryBuilder,
@@ -348,6 +359,7 @@ Future maybeCreateUser(User user) async {
   final userRecord = UsersRecord.collection.doc(user.uid);
   final userExists = await userRecord.get().then((u) => u.exists);
   if (userExists) {
+    currentUserDocument = await UsersRecord.getDocumentOnce(userRecord);
     return;
   }
 
@@ -361,4 +373,6 @@ Future maybeCreateUser(User user) async {
   );
 
   await userRecord.set(userData);
+  currentUserDocument =
+      serializers.deserializeWith(UsersRecord.serializer, userData);
 }

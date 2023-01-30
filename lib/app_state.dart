@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/lat_lng.dart';
 
-class FFAppState {
+class FFAppState extends ChangeNotifier {
   static final FFAppState _instance = FFAppState._internal();
 
   factory FFAppState() {
@@ -16,39 +15,19 @@ class FFAppState {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
-    _workoutInProgress =
-        prefs.getBool('ff_workoutInProgress') ?? _workoutInProgress;
-    _totalLiftedInCurrentWorkout =
-        prefs.getInt('ff_totalLiftedInCurrentWorkout') ??
-            _totalLiftedInCurrentWorkout;
-    _currentWorkoutId =
-        prefs.getString('ff_currentWorkoutId')?.ref ?? _currentWorkoutId;
+  }
+
+  void update(VoidCallback callback) {
+    callback();
+    notifyListeners();
   }
 
   late SharedPreferences prefs;
 
-  bool _workoutInProgress = false;
-  bool get workoutInProgress => _workoutInProgress;
-  set workoutInProgress(bool _value) {
-    _workoutInProgress = _value;
-    prefs.setBool('ff_workoutInProgress', _value);
-  }
-
-  int _totalLiftedInCurrentWorkout = 0;
-  int get totalLiftedInCurrentWorkout => _totalLiftedInCurrentWorkout;
-  set totalLiftedInCurrentWorkout(int _value) {
-    _totalLiftedInCurrentWorkout = _value;
-    prefs.setInt('ff_totalLiftedInCurrentWorkout', _value);
-  }
-
-  DocumentReference? _currentWorkoutId;
-  DocumentReference? get currentWorkoutId => _currentWorkoutId;
-  set currentWorkoutId(DocumentReference? _value) {
-    if (_value == null) {
-      return;
-    }
-    _currentWorkoutId = _value;
-    prefs.setString('ff_currentWorkoutId', _value.path);
+  String _selectedExercise = '';
+  String get selectedExercise => _selectedExercise;
+  set selectedExercise(String _value) {
+    _selectedExercise = _value;
   }
 }
 

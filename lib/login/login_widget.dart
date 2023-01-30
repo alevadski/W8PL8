@@ -1,12 +1,13 @@
 import '../auth/auth_util.dart';
-import '../dashboard/dashboard_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({
@@ -22,21 +23,14 @@ class LoginWidget extends StatefulWidget {
 
 class _LoginWidgetState extends State<LoginWidget> {
   TextEditingController? emailAddressController;
-
   TextEditingController? passwordController;
-
   late bool passwordVisibility;
-
   TextEditingController? passwordConfirmController;
-
   late bool passwordConfirmVisibility;
-
   TextEditingController? emailAddressLoginController;
-
   TextEditingController? passwordLoginController;
-
   late bool passwordLoginVisibility;
-
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -50,15 +44,29 @@ class _LoginWidgetState extends State<LoginWidget> {
     emailAddressLoginController = TextEditingController();
     passwordLoginController = TextEditingController();
     passwordLoginVisibility = false;
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Login'});
+  }
+
+  @override
+  void dispose() {
+    _unfocusNode.dispose();
+    emailAddressController?.dispose();
+    passwordController?.dispose();
+    passwordConfirmController?.dispose();
+    emailAddressLoginController?.dispose();
+    passwordLoginController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFF14181B),
       body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
+        onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height * 1,
@@ -308,6 +316,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   0, 24, 0, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'LOGIN_PAGE_Button-Login_ON_TAP');
+                                              logFirebaseEvent(
+                                                  'Button-Login_auth');
+
                                               final user =
                                                   await signInWithEmail(
                                                 context,
@@ -324,7 +337,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      DashboardWidget(),
+                                                      NavBarPage(
+                                                          initialPage:
+                                                              'Dashboard'),
                                                 ),
                                                 (r) => false,
                                               );
@@ -403,6 +418,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             children: [
                                               InkWell(
                                                 onTap: () async {
+                                                  logFirebaseEvent(
+                                                      'LOGIN_PAGE_Container_0twxw204_ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'Container_auth');
                                                   final user =
                                                       await signInWithGoogle(
                                                           context);
@@ -414,7 +433,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          DashboardWidget(),
+                                                          NavBarPage(
+                                                              initialPage:
+                                                                  'Dashboard'),
                                                     ),
                                                     (r) => false,
                                                   );
@@ -717,6 +738,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   0, 24, 0, 0),
                                           child: FFButtonWidget(
                                             onPressed: () async {
+                                              logFirebaseEvent(
+                                                  'LOGIN_PAGE_CREATE_ACCOUNT_BTN_ON_TAP');
+                                              logFirebaseEvent('Button_auth');
                                               if (passwordController?.text !=
                                                   passwordConfirmController
                                                       ?.text) {
@@ -746,7 +770,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      DashboardWidget(),
+                                                      NavBarPage(
+                                                          initialPage:
+                                                              'Dashboard'),
                                                 ),
                                                 (r) => false,
                                               );
@@ -819,6 +845,10 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             children: [
                                               InkWell(
                                                 onTap: () async {
+                                                  logFirebaseEvent(
+                                                      'LOGIN_PAGE_Container_kqosg5d8_ON_TAP');
+                                                  logFirebaseEvent(
+                                                      'Container_auth');
                                                   final user =
                                                       await signInWithGoogle(
                                                           context);
@@ -830,7 +860,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                     context,
                                                     MaterialPageRoute(
                                                       builder: (context) =>
-                                                          DashboardWidget(),
+                                                          NavBarPage(
+                                                              initialPage:
+                                                                  'Dashboard'),
                                                     ),
                                                     (r) => false,
                                                   );

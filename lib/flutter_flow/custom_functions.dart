@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -18,38 +19,14 @@ int showRegistration(bool register) {
   }
 }
 
-int getTotalWeightLifted(List<DocumentReference>? workouts) {
-  int reps = 0;
-  workouts?.forEach((w) async {
-    final doc =
-        await FirebaseFirestore.instance.collection('Workouts').doc(w.id).get();
-    print(doc.data()?['name']);
-    if (doc.exists) {
-      doc.data()?['exercise']?.forEach((e) {
-        e.data()['sets'].forEach((s) => s.data()['reps'].forEach((x) {
-              reps += (s.data()['weight'] as num).toInt() * x.data()['count']
-                  as int;
-            }));
-      });
-    }
-  });
-  return reps;
-}
+String formatDuration(int duration) {
+  // get HH:mm:ss string from duration in seconds
+  final hours = (duration / 3600).truncate();
+  duration = duration % 3600;
+  final minutes = (duration / 60).truncate();
+  final seconds = (duration % 60);
 
-int getRepTotalWeight(
-  int weight,
-  int count,
-) {
-  return weight * count;
-}
-
-int addTotalRepWeightToCurrentWorkout(
-  int totalLiftedInRep,
-  int totalLiftedInWorkout,
-) {
-  return totalLiftedInRep + totalLiftedInWorkout;
-}
-
-DateTime getBeginningOfTheWeek(DateTime date) {
-  return DateTime.utc(date.year, date.month, date.day - (date.weekday - 1));
+  return new Duration(hours: hours, minutes: minutes, seconds: seconds)
+      .toString()
+      .split(".")[0];
 }

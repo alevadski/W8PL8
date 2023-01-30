@@ -17,7 +17,14 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
   @override
   Iterable<Object?> serialize(Serializers serializers, UsersRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
+    final result = <Object?>[
+      'supplements',
+      serializers.serialize(object.supplements,
+          specifiedType: const FullType(SupplementsStruct)),
+      'goals',
+      serializers.serialize(object.goals,
+          specifiedType: const FullType(GoalsStruct)),
+    ];
     Object? value;
     value = object.email;
     if (value != null) {
@@ -60,6 +67,110 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add('phone_number')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
+    }
+    value = object.adId;
+    if (value != null) {
+      result
+        ..add('adId')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.name;
+    if (value != null) {
+      result
+        ..add('name')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.userName;
+    if (value != null) {
+      result
+        ..add('userName')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.gender;
+    if (value != null) {
+      result
+        ..add('gender')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.dateOfBirth;
+    if (value != null) {
+      result
+        ..add('dateOfBirth')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.height;
+    if (value != null) {
+      result
+        ..add('height')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.weight;
+    if (value != null) {
+      result
+        ..add('weight')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.country;
+    if (value != null) {
+      result
+        ..add('country')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.city;
+    if (value != null) {
+      result
+        ..add('city')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.bodyType;
+    if (value != null) {
+      result
+        ..add('bodyType')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.experience;
+    if (value != null) {
+      result
+        ..add('experience')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.isMetricUnit;
+    if (value != null) {
+      result
+        ..add('isMetricUnit')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.isPremium;
+    if (value != null) {
+      result
+        ..add('isPremium')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.registeredAt;
+    if (value != null) {
+      result
+        ..add('registeredAt')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
+    value = object.supplementIntakes;
+    if (value != null) {
+      result
+        ..add('supplementIntakes')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(SupplementIntakeStruct)])));
     }
     value = object.ffRef;
     if (value != null) {
@@ -107,6 +218,77 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'adId':
+          result.adId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'userName':
+          result.userName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'gender':
+          result.gender = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'dateOfBirth':
+          result.dateOfBirth = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'height':
+          result.height = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'weight':
+          result.weight = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'country':
+          result.country = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'city':
+          result.city = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'bodyType':
+          result.bodyType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'experience':
+          result.experience = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'isMetricUnit':
+          result.isMetricUnit = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'isPremium':
+          result.isPremium = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'registeredAt':
+          result.registeredAt = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
+        case 'supplementIntakes':
+          result.supplementIntakes.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(SupplementIntakeStruct)
+              ]))! as BuiltList<Object?>);
+          break;
+        case 'supplements':
+          result.supplements.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SupplementsStruct))!
+              as SupplementsStruct);
+          break;
+        case 'goals':
+          result.goals.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GoalsStruct))! as GoalsStruct);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -134,6 +316,40 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? phoneNumber;
   @override
+  final String? adId;
+  @override
+  final String? name;
+  @override
+  final String? userName;
+  @override
+  final int? gender;
+  @override
+  final DateTime? dateOfBirth;
+  @override
+  final int? height;
+  @override
+  final double? weight;
+  @override
+  final String? country;
+  @override
+  final String? city;
+  @override
+  final String? bodyType;
+  @override
+  final String? experience;
+  @override
+  final bool? isMetricUnit;
+  @override
+  final bool? isPremium;
+  @override
+  final DateTime? registeredAt;
+  @override
+  final BuiltList<SupplementIntakeStruct>? supplementIntakes;
+  @override
+  final SupplementsStruct supplements;
+  @override
+  final GoalsStruct goals;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -146,8 +362,29 @@ class _$UsersRecord extends UsersRecord {
       this.uid,
       this.createdTime,
       this.phoneNumber,
+      this.adId,
+      this.name,
+      this.userName,
+      this.gender,
+      this.dateOfBirth,
+      this.height,
+      this.weight,
+      this.country,
+      this.city,
+      this.bodyType,
+      this.experience,
+      this.isMetricUnit,
+      this.isPremium,
+      this.registeredAt,
+      this.supplementIntakes,
+      required this.supplements,
+      required this.goals,
       this.ffRef})
-      : super._();
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        supplements, r'UsersRecord', 'supplements');
+    BuiltValueNullFieldError.checkNotNull(goals, r'UsersRecord', 'goals');
+  }
 
   @override
   UsersRecord rebuild(void Function(UsersRecordBuilder) updates) =>
@@ -166,6 +403,23 @@ class _$UsersRecord extends UsersRecord {
         uid == other.uid &&
         createdTime == other.createdTime &&
         phoneNumber == other.phoneNumber &&
+        adId == other.adId &&
+        name == other.name &&
+        userName == other.userName &&
+        gender == other.gender &&
+        dateOfBirth == other.dateOfBirth &&
+        height == other.height &&
+        weight == other.weight &&
+        country == other.country &&
+        city == other.city &&
+        bodyType == other.bodyType &&
+        experience == other.experience &&
+        isMetricUnit == other.isMetricUnit &&
+        isPremium == other.isPremium &&
+        registeredAt == other.registeredAt &&
+        supplementIntakes == other.supplementIntakes &&
+        supplements == other.supplements &&
+        goals == other.goals &&
         ffRef == other.ffRef;
   }
 
@@ -175,11 +429,39 @@ class _$UsersRecord extends UsersRecord {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, email.hashCode), displayName.hashCode),
-                        photoUrl.hashCode),
-                    uid.hashCode),
-                createdTime.hashCode),
-            phoneNumber.hashCode),
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc(
+                                                $jc(
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode),
+                                                                                phoneNumber.hashCode),
+                                                                            adId.hashCode),
+                                                                        name.hashCode),
+                                                                    userName.hashCode),
+                                                                gender.hashCode),
+                                                            dateOfBirth.hashCode),
+                                                        height.hashCode),
+                                                    weight.hashCode),
+                                                country.hashCode),
+                                            city.hashCode),
+                                        bodyType.hashCode),
+                                    experience.hashCode),
+                                isMetricUnit.hashCode),
+                            isPremium.hashCode),
+                        registeredAt.hashCode),
+                    supplementIntakes.hashCode),
+                supplements.hashCode),
+            goals.hashCode),
         ffRef.hashCode));
   }
 
@@ -192,6 +474,23 @@ class _$UsersRecord extends UsersRecord {
           ..add('uid', uid)
           ..add('createdTime', createdTime)
           ..add('phoneNumber', phoneNumber)
+          ..add('adId', adId)
+          ..add('name', name)
+          ..add('userName', userName)
+          ..add('gender', gender)
+          ..add('dateOfBirth', dateOfBirth)
+          ..add('height', height)
+          ..add('weight', weight)
+          ..add('country', country)
+          ..add('city', city)
+          ..add('bodyType', bodyType)
+          ..add('experience', experience)
+          ..add('isMetricUnit', isMetricUnit)
+          ..add('isPremium', isPremium)
+          ..add('registeredAt', registeredAt)
+          ..add('supplementIntakes', supplementIntakes)
+          ..add('supplements', supplements)
+          ..add('goals', goals)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -224,6 +523,80 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
+  String? _adId;
+  String? get adId => _$this._adId;
+  set adId(String? adId) => _$this._adId = adId;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _userName;
+  String? get userName => _$this._userName;
+  set userName(String? userName) => _$this._userName = userName;
+
+  int? _gender;
+  int? get gender => _$this._gender;
+  set gender(int? gender) => _$this._gender = gender;
+
+  DateTime? _dateOfBirth;
+  DateTime? get dateOfBirth => _$this._dateOfBirth;
+  set dateOfBirth(DateTime? dateOfBirth) => _$this._dateOfBirth = dateOfBirth;
+
+  int? _height;
+  int? get height => _$this._height;
+  set height(int? height) => _$this._height = height;
+
+  double? _weight;
+  double? get weight => _$this._weight;
+  set weight(double? weight) => _$this._weight = weight;
+
+  String? _country;
+  String? get country => _$this._country;
+  set country(String? country) => _$this._country = country;
+
+  String? _city;
+  String? get city => _$this._city;
+  set city(String? city) => _$this._city = city;
+
+  String? _bodyType;
+  String? get bodyType => _$this._bodyType;
+  set bodyType(String? bodyType) => _$this._bodyType = bodyType;
+
+  String? _experience;
+  String? get experience => _$this._experience;
+  set experience(String? experience) => _$this._experience = experience;
+
+  bool? _isMetricUnit;
+  bool? get isMetricUnit => _$this._isMetricUnit;
+  set isMetricUnit(bool? isMetricUnit) => _$this._isMetricUnit = isMetricUnit;
+
+  bool? _isPremium;
+  bool? get isPremium => _$this._isPremium;
+  set isPremium(bool? isPremium) => _$this._isPremium = isPremium;
+
+  DateTime? _registeredAt;
+  DateTime? get registeredAt => _$this._registeredAt;
+  set registeredAt(DateTime? registeredAt) =>
+      _$this._registeredAt = registeredAt;
+
+  ListBuilder<SupplementIntakeStruct>? _supplementIntakes;
+  ListBuilder<SupplementIntakeStruct> get supplementIntakes =>
+      _$this._supplementIntakes ??= new ListBuilder<SupplementIntakeStruct>();
+  set supplementIntakes(
+          ListBuilder<SupplementIntakeStruct>? supplementIntakes) =>
+      _$this._supplementIntakes = supplementIntakes;
+
+  SupplementsStructBuilder? _supplements;
+  SupplementsStructBuilder get supplements =>
+      _$this._supplements ??= new SupplementsStructBuilder();
+  set supplements(SupplementsStructBuilder? supplements) =>
+      _$this._supplements = supplements;
+
+  GoalsStructBuilder? _goals;
+  GoalsStructBuilder get goals => _$this._goals ??= new GoalsStructBuilder();
+  set goals(GoalsStructBuilder? goals) => _$this._goals = goals;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -241,6 +614,23 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _uid = $v.uid;
       _createdTime = $v.createdTime;
       _phoneNumber = $v.phoneNumber;
+      _adId = $v.adId;
+      _name = $v.name;
+      _userName = $v.userName;
+      _gender = $v.gender;
+      _dateOfBirth = $v.dateOfBirth;
+      _height = $v.height;
+      _weight = $v.weight;
+      _country = $v.country;
+      _city = $v.city;
+      _bodyType = $v.bodyType;
+      _experience = $v.experience;
+      _isMetricUnit = $v.isMetricUnit;
+      _isPremium = $v.isPremium;
+      _registeredAt = $v.registeredAt;
+      _supplementIntakes = $v.supplementIntakes?.toBuilder();
+      _supplements = $v.supplements.toBuilder();
+      _goals = $v.goals.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -262,15 +652,49 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   UsersRecord build() => _build();
 
   _$UsersRecord _build() {
-    final _$result = _$v ??
-        new _$UsersRecord._(
-            email: email,
-            displayName: displayName,
-            photoUrl: photoUrl,
-            uid: uid,
-            createdTime: createdTime,
-            phoneNumber: phoneNumber,
-            ffRef: ffRef);
+    _$UsersRecord _$result;
+    try {
+      _$result = _$v ??
+          new _$UsersRecord._(
+              email: email,
+              displayName: displayName,
+              photoUrl: photoUrl,
+              uid: uid,
+              createdTime: createdTime,
+              phoneNumber: phoneNumber,
+              adId: adId,
+              name: name,
+              userName: userName,
+              gender: gender,
+              dateOfBirth: dateOfBirth,
+              height: height,
+              weight: weight,
+              country: country,
+              city: city,
+              bodyType: bodyType,
+              experience: experience,
+              isMetricUnit: isMetricUnit,
+              isPremium: isPremium,
+              registeredAt: registeredAt,
+              supplementIntakes: _supplementIntakes?.build(),
+              supplements: supplements.build(),
+              goals: goals.build(),
+              ffRef: ffRef);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'supplementIntakes';
+        _supplementIntakes?.build();
+        _$failedField = 'supplements';
+        supplements.build();
+        _$failedField = 'goals';
+        goals.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'UsersRecord', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

@@ -1,24 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'exercise_list_record.dart';
+part of 'preset_exercises_record.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<ExerciseListRecord> _$exerciseListRecordSerializer =
-    new _$ExerciseListRecordSerializer();
+Serializer<PresetExercisesRecord> _$presetExercisesRecordSerializer =
+    new _$PresetExercisesRecordSerializer();
 
-class _$ExerciseListRecordSerializer
-    implements StructuredSerializer<ExerciseListRecord> {
+class _$PresetExercisesRecordSerializer
+    implements StructuredSerializer<PresetExercisesRecord> {
   @override
-  final Iterable<Type> types = const [ExerciseListRecord, _$ExerciseListRecord];
+  final Iterable<Type> types = const [
+    PresetExercisesRecord,
+    _$PresetExercisesRecord
+  ];
   @override
-  final String wireName = 'ExerciseListRecord';
+  final String wireName = 'PresetExercisesRecord';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, ExerciseListRecord object,
+      Serializers serializers, PresetExercisesRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
@@ -41,10 +44,10 @@ class _$ExerciseListRecordSerializer
   }
 
   @override
-  ExerciseListRecord deserialize(
+  PresetExercisesRecord deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExerciseListRecordBuilder();
+    final result = new PresetExercisesRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -69,31 +72,31 @@ class _$ExerciseListRecordSerializer
   }
 }
 
-class _$ExerciseListRecord extends ExerciseListRecord {
+class _$PresetExercisesRecord extends PresetExercisesRecord {
   @override
   final String? name;
   @override
   final DocumentReference<Object?>? ffRef;
 
-  factory _$ExerciseListRecord(
-          [void Function(ExerciseListRecordBuilder)? updates]) =>
-      (new ExerciseListRecordBuilder()..update(updates))._build();
+  factory _$PresetExercisesRecord(
+          [void Function(PresetExercisesRecordBuilder)? updates]) =>
+      (new PresetExercisesRecordBuilder()..update(updates))._build();
 
-  _$ExerciseListRecord._({this.name, this.ffRef}) : super._();
+  _$PresetExercisesRecord._({this.name, this.ffRef}) : super._();
 
   @override
-  ExerciseListRecord rebuild(
-          void Function(ExerciseListRecordBuilder) updates) =>
+  PresetExercisesRecord rebuild(
+          void Function(PresetExercisesRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ExerciseListRecordBuilder toBuilder() =>
-      new ExerciseListRecordBuilder()..replace(this);
+  PresetExercisesRecordBuilder toBuilder() =>
+      new PresetExercisesRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ExerciseListRecord &&
+    return other is PresetExercisesRecord &&
         name == other.name &&
         ffRef == other.ffRef;
   }
@@ -105,16 +108,16 @@ class _$ExerciseListRecord extends ExerciseListRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'ExerciseListRecord')
+    return (newBuiltValueToStringHelper(r'PresetExercisesRecord')
           ..add('name', name)
           ..add('ffRef', ffRef))
         .toString();
   }
 }
 
-class ExerciseListRecordBuilder
-    implements Builder<ExerciseListRecord, ExerciseListRecordBuilder> {
-  _$ExerciseListRecord? _$v;
+class PresetExercisesRecordBuilder
+    implements Builder<PresetExercisesRecord, PresetExercisesRecordBuilder> {
+  _$PresetExercisesRecord? _$v;
 
   String? _name;
   String? get name => _$this._name;
@@ -124,11 +127,11 @@ class ExerciseListRecordBuilder
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
-  ExerciseListRecordBuilder() {
-    ExerciseListRecord._initializeBuilder(this);
+  PresetExercisesRecordBuilder() {
+    PresetExercisesRecord._initializeBuilder(this);
   }
 
-  ExerciseListRecordBuilder get _$this {
+  PresetExercisesRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
@@ -139,22 +142,22 @@ class ExerciseListRecordBuilder
   }
 
   @override
-  void replace(ExerciseListRecord other) {
+  void replace(PresetExercisesRecord other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$ExerciseListRecord;
+    _$v = other as _$PresetExercisesRecord;
   }
 
   @override
-  void update(void Function(ExerciseListRecordBuilder)? updates) {
+  void update(void Function(PresetExercisesRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  ExerciseListRecord build() => _build();
+  PresetExercisesRecord build() => _build();
 
-  _$ExerciseListRecord _build() {
+  _$PresetExercisesRecord _build() {
     final _$result =
-        _$v ?? new _$ExerciseListRecord._(name: name, ffRef: ffRef);
+        _$v ?? new _$PresetExercisesRecord._(name: name, ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

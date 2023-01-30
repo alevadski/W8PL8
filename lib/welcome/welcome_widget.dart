@@ -2,9 +2,11 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login/login_widget.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart'
+    as smooth_page_indicator;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeWidget extends StatefulWidget {
   const WelcomeWidget({Key? key}) : super(key: key);
@@ -15,12 +17,28 @@ class WelcomeWidget extends StatefulWidget {
 
 class _WelcomeWidgetState extends State<WelcomeWidget> {
   PageController? pageViewController;
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Welcome'});
+  }
+
+  @override
+  void dispose() {
+    _unfocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
@@ -37,10 +55,9 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
         centerTitle: false,
         elevation: 0,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -242,7 +259,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                         alignment: AlignmentDirectional(0, 1),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                          child: SmoothPageIndicator(
+                          child: smooth_page_indicator.SmoothPageIndicator(
                             controller: pageViewController ??=
                                 PageController(initialPage: 0),
                             count: 3,
@@ -254,7 +271,7 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                                 curve: Curves.ease,
                               );
                             },
-                            effect: ExpandingDotsEffect(
+                            effect: smooth_page_indicator.ExpandingDotsEffect(
                               expansionFactor: 2,
                               spacing: 8,
                               radius: 16,
@@ -275,6 +292,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 16),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    logFirebaseEvent('WELCOME_PAGE_LOGIN_BTN_ON_TAP');
+                    logFirebaseEvent('Button_navigate_to');
                     await Navigator.push(
                       context,
                       PageTransition(
@@ -310,6 +329,8 @@ class _WelcomeWidgetState extends State<WelcomeWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    logFirebaseEvent('WELCOME_PAGE_REGISTER_BTN_ON_TAP');
+                    logFirebaseEvent('Button_navigate_to');
                     await Navigator.push(
                       context,
                       PageTransition(

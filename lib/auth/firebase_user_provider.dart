@@ -1,17 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 
-class W8Pl8FirebaseUser {
-  W8Pl8FirebaseUser(this.user);
+class BullkFirebaseUser {
+  BullkFirebaseUser(this.user);
   User? user;
   bool get loggedIn => user != null;
 }
 
-W8Pl8FirebaseUser? currentUser;
+BullkFirebaseUser? currentUser;
 bool get loggedIn => currentUser?.loggedIn ?? false;
-Stream<W8Pl8FirebaseUser> w8Pl8FirebaseUserStream() => FirebaseAuth.instance
-    .authStateChanges()
-    .debounce((user) => user == null && !loggedIn
-        ? TimerStream(true, const Duration(seconds: 1))
-        : Stream.value(user))
-    .map<W8Pl8FirebaseUser>((user) => currentUser = W8Pl8FirebaseUser(user));
+Stream<BullkFirebaseUser> bullkFirebaseUserStream() => FirebaseAuth.instance
+        .authStateChanges()
+        .debounce((user) => user == null && !loggedIn
+            ? TimerStream(true, const Duration(seconds: 1))
+            : Stream.value(user))
+        .map<BullkFirebaseUser>(
+      (user) {
+        currentUser = BullkFirebaseUser(user);
+        if (!kIsWeb) {
+          FirebaseCrashlytics.instance.setUserIdentifier(user?.uid ?? '');
+        }
+        return currentUser!;
+      },
+    );

@@ -11,29 +11,35 @@ abstract class WorkoutsRecord
   static Serializer<WorkoutsRecord> get serializer =>
       _$workoutsRecordSerializer;
 
-  DateTime? get timestamp;
+  DateTime? get date;
 
-  String? get note;
+  int? get duration;
 
-  String? get name;
+  BuiltList<RepetitionStruct>? get repetitions;
 
-  @BuiltValueField(wireName: 'total_lifted')
   double? get totalLifted;
 
-  int? get index;
+  int? get totalExercises;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
-  static void _initializeBuilder(WorkoutsRecordBuilder builder) => builder
-    ..note = ''
-    ..name = ''
-    ..totalLifted = 0.0
-    ..index = 0;
+  DocumentReference get parentReference => reference.parent.parent!;
 
-  static CollectionReference get collection =>
-      FirebaseFirestore.instance.collection('workouts');
+  static void _initializeBuilder(WorkoutsRecordBuilder builder) => builder
+    ..duration = 0
+    ..repetitions = ListBuilder()
+    ..totalLifted = 0.0
+    ..totalExercises = 0;
+
+  static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
+      parent != null
+          ? parent.collection('workouts')
+          : FirebaseFirestore.instance.collectionGroup('workouts');
+
+  static DocumentReference createDoc(DocumentReference parent) =>
+      parent.collection('workouts').doc();
 
   static Stream<WorkoutsRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
@@ -54,21 +60,20 @@ abstract class WorkoutsRecord
 }
 
 Map<String, dynamic> createWorkoutsRecordData({
-  DateTime? timestamp,
-  String? note,
-  String? name,
+  DateTime? date,
+  int? duration,
   double? totalLifted,
-  int? index,
+  int? totalExercises,
 }) {
   final firestoreData = serializers.toFirestore(
     WorkoutsRecord.serializer,
     WorkoutsRecord(
       (w) => w
-        ..timestamp = timestamp
-        ..note = note
-        ..name = name
+        ..date = date
+        ..duration = duration
+        ..repetitions = null
         ..totalLifted = totalLifted
-        ..index = index,
+        ..totalExercises = totalExercises,
     ),
   );
 

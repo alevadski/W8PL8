@@ -1,40 +1,42 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class StatisticsWidget extends StatefulWidget {
-  const StatisticsWidget({Key? key}) : super(key: key);
+class SupplementsWidget extends StatefulWidget {
+  const SupplementsWidget({Key? key}) : super(key: key);
 
   @override
-  _StatisticsWidgetState createState() => _StatisticsWidgetState();
+  _SupplementsWidgetState createState() => _SupplementsWidgetState();
 }
 
-class _StatisticsWidgetState extends State<StatisticsWidget> {
+class _SupplementsWidgetState extends State<SupplementsWidget> {
+  final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'Supplements'});
+  }
+
+  @override
+  void dispose() {
+    _unfocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.white,
-            size: 30,
-          ),
-          onPressed: () {
-            print('IconButton pressed ...');
-          },
-        ),
         title: Text(
           'Page Title',
           style: FlutterFlowTheme.of(context).title2.override(
@@ -47,10 +49,9 @@ class _StatisticsWidgetState extends State<StatisticsWidget> {
         centerTitle: false,
         elevation: 2,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [],

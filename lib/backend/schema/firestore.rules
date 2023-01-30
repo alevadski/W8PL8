@@ -8,40 +8,28 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    match /workouts/{document} {
+    match /supplementTypes/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if true;
       allow delete: if true;
     }
 
-    match /workouts/{parent}/exercises/{document} {
+    match /presetExercises/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if true;
       allow delete: if true;
     }
 
-    match /{path=**}/exercises/{document} {
-      allow read: if true;
-    }
-
-
-    match /exerciseList/{document} {
-      allow create: if true;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if false;
-    }
-
-    match /workouts/{parent}/reps/{document} {
+    match /users/{parent}/workouts/{document} {
       allow create: if true;
       allow read: if true;
       allow write: if true;
       allow delete: if true;
     }
 
-    match /{path=**}/reps/{document} {
+    match /{path=**}/workouts/{document} {
       allow read: if true;
     }
 

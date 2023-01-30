@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class FlutterFlowIconButton extends StatefulWidget {
   const FlutterFlowIconButton({
@@ -9,6 +10,7 @@ class FlutterFlowIconButton extends StatefulWidget {
     this.borderWidth,
     this.buttonSize,
     this.fillColor,
+    this.disabledColor,
     this.onPressed,
     this.showLoadingIndicator = false,
   }) : super(key: key);
@@ -17,6 +19,7 @@ class FlutterFlowIconButton extends StatefulWidget {
   final double? borderRadius;
   final double? buttonSize;
   final Color? fillColor;
+  final Color? disabledColor;
   final Color? borderColor;
   final double? borderWidth;
   final bool showLoadingIndicator;
@@ -28,10 +31,26 @@ class FlutterFlowIconButton extends StatefulWidget {
 
 class _FlutterFlowIconButtonState extends State<FlutterFlowIconButton> {
   bool loading = false;
+  late double? iconSize;
+  late Color? iconColor;
+
+  @override
+  void initState() {
+    final isFontAwesome = widget.icon is FaIcon;
+    if (isFontAwesome) {
+      final icon = widget.icon as FaIcon;
+      iconSize = icon.size;
+      iconColor = icon.color;
+    } else {
+      final icon = widget.icon as Icon;
+      iconSize = icon.size;
+      iconColor = icon.color;
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final icon = widget.icon as Icon;
     return Material(
       borderRadius: widget.borderRadius != null
           ? BorderRadius.circular(widget.borderRadius!)
@@ -42,7 +61,9 @@ class _FlutterFlowIconButtonState extends State<FlutterFlowIconButton> {
         width: widget.buttonSize,
         height: widget.buttonSize,
         decoration: BoxDecoration(
-          color: widget.fillColor,
+          color: widget.onPressed != null
+              ? widget.fillColor
+              : widget.disabledColor,
           border: Border.all(
             color: widget.borderColor ?? Colors.transparent,
             width: widget.borderWidth ?? 0,
@@ -54,11 +75,11 @@ class _FlutterFlowIconButtonState extends State<FlutterFlowIconButton> {
         child: (widget.showLoadingIndicator && loading)
             ? Center(
                 child: Container(
-                  width: icon.size,
-                  height: icon.size,
+                  width: iconSize,
+                  height: iconSize,
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      icon.color ?? Colors.white,
+                      iconColor ?? Colors.white,
                     ),
                   ),
                 ),

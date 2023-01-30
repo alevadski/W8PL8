@@ -1,21 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'rep_struct.dart';
+part of 'supplement_type_struct.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<RepStruct> _$repStructSerializer = new _$RepStructSerializer();
+Serializer<SupplementTypeStruct> _$supplementTypeStructSerializer =
+    new _$SupplementTypeStructSerializer();
 
-class _$RepStructSerializer implements StructuredSerializer<RepStruct> {
+class _$SupplementTypeStructSerializer
+    implements StructuredSerializer<SupplementTypeStruct> {
   @override
-  final Iterable<Type> types = const [RepStruct, _$RepStruct];
+  final Iterable<Type> types = const [
+    SupplementTypeStruct,
+    _$SupplementTypeStruct
+  ];
   @override
-  final String wireName = 'RepStruct';
+  final String wireName = 'SupplementTypeStruct';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, RepStruct object,
+  Iterable<Object?> serialize(
+      Serializers serializers, SupplementTypeStruct object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'firestoreUtilData',
@@ -23,22 +29,17 @@ class _$RepStructSerializer implements StructuredSerializer<RepStruct> {
           specifiedType: const FullType(FirestoreUtilData)),
     ];
     Object? value;
-    value = object.weight;
+    value = object.name;
     if (value != null) {
       result
-        ..add('weight')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+        ..add('name')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
-    value = object.count;
+    value = object.color;
     if (value != null) {
       result
-        ..add('count')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
-    value = object.note;
-    if (value != null) {
-      result
-        ..add('note')
+        ..add('color')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -46,9 +47,10 @@ class _$RepStructSerializer implements StructuredSerializer<RepStruct> {
   }
 
   @override
-  RepStruct deserialize(Serializers serializers, Iterable<Object?> serialized,
+  SupplementTypeStruct deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new RepStructBuilder();
+    final result = new SupplementTypeStructBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -56,16 +58,12 @@ class _$RepStructSerializer implements StructuredSerializer<RepStruct> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'weight':
-          result.weight = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
-        case 'count':
-          result.count = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
-        case 'note':
-          result.note = serializers.deserialize(value,
+        case 'color':
+          result.color = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'firestoreUtilData':
@@ -80,91 +78,85 @@ class _$RepStructSerializer implements StructuredSerializer<RepStruct> {
   }
 }
 
-class _$RepStruct extends RepStruct {
+class _$SupplementTypeStruct extends SupplementTypeStruct {
   @override
-  final int? weight;
+  final String? name;
   @override
-  final int? count;
-  @override
-  final String? note;
+  final String? color;
   @override
   final FirestoreUtilData firestoreUtilData;
 
-  factory _$RepStruct([void Function(RepStructBuilder)? updates]) =>
-      (new RepStructBuilder()..update(updates))._build();
+  factory _$SupplementTypeStruct(
+          [void Function(SupplementTypeStructBuilder)? updates]) =>
+      (new SupplementTypeStructBuilder()..update(updates))._build();
 
-  _$RepStruct._(
-      {this.weight, this.count, this.note, required this.firestoreUtilData})
+  _$SupplementTypeStruct._(
+      {this.name, this.color, required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        firestoreUtilData, r'RepStruct', 'firestoreUtilData');
+        firestoreUtilData, r'SupplementTypeStruct', 'firestoreUtilData');
   }
 
   @override
-  RepStruct rebuild(void Function(RepStructBuilder) updates) =>
+  SupplementTypeStruct rebuild(
+          void Function(SupplementTypeStructBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  RepStructBuilder toBuilder() => new RepStructBuilder()..replace(this);
+  SupplementTypeStructBuilder toBuilder() =>
+      new SupplementTypeStructBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is RepStruct &&
-        weight == other.weight &&
-        count == other.count &&
-        note == other.note &&
+    return other is SupplementTypeStruct &&
+        name == other.name &&
+        color == other.color &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, weight.hashCode), count.hashCode), note.hashCode),
+    return $jf($jc($jc($jc(0, name.hashCode), color.hashCode),
         firestoreUtilData.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'RepStruct')
-          ..add('weight', weight)
-          ..add('count', count)
-          ..add('note', note)
+    return (newBuiltValueToStringHelper(r'SupplementTypeStruct')
+          ..add('name', name)
+          ..add('color', color)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
 }
 
-class RepStructBuilder implements Builder<RepStruct, RepStructBuilder> {
-  _$RepStruct? _$v;
+class SupplementTypeStructBuilder
+    implements Builder<SupplementTypeStruct, SupplementTypeStructBuilder> {
+  _$SupplementTypeStruct? _$v;
 
-  int? _weight;
-  int? get weight => _$this._weight;
-  set weight(int? weight) => _$this._weight = weight;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  int? _count;
-  int? get count => _$this._count;
-  set count(int? count) => _$this._count = count;
-
-  String? _note;
-  String? get note => _$this._note;
-  set note(String? note) => _$this._note = note;
+  String? _color;
+  String? get color => _$this._color;
+  set color(String? color) => _$this._color = color;
 
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
   set firestoreUtilData(FirestoreUtilData? firestoreUtilData) =>
       _$this._firestoreUtilData = firestoreUtilData;
 
-  RepStructBuilder() {
-    RepStruct._initializeBuilder(this);
+  SupplementTypeStructBuilder() {
+    SupplementTypeStruct._initializeBuilder(this);
   }
 
-  RepStructBuilder get _$this {
+  SupplementTypeStructBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _weight = $v.weight;
-      _count = $v.count;
-      _note = $v.note;
+      _name = $v.name;
+      _color = $v.color;
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -172,27 +164,28 @@ class RepStructBuilder implements Builder<RepStruct, RepStructBuilder> {
   }
 
   @override
-  void replace(RepStruct other) {
+  void replace(SupplementTypeStruct other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$RepStruct;
+    _$v = other as _$SupplementTypeStruct;
   }
 
   @override
-  void update(void Function(RepStructBuilder)? updates) {
+  void update(void Function(SupplementTypeStructBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  RepStruct build() => _build();
+  SupplementTypeStruct build() => _build();
 
-  _$RepStruct _build() {
+  _$SupplementTypeStruct _build() {
     final _$result = _$v ??
-        new _$RepStruct._(
-            weight: weight,
-            count: count,
-            note: note,
+        new _$SupplementTypeStruct._(
+            name: name,
+            color: color,
             firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
-                firestoreUtilData, r'RepStruct', 'firestoreUtilData'));
+                firestoreUtilData,
+                r'SupplementTypeStruct',
+                'firestoreUtilData'));
     replace(_$result);
     return _$result;
   }
