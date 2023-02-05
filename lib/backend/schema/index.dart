@@ -11,5 +11,4 @@ export 'structs/repetition_struct.dart';
 export 'structs/streak_goal_struct.dart';
 export 'structs/supplement_intake_struct.dart';
 export 'structs/supplement_type_struct.dart';
-export 'structs/supplements_struct.dart';
 export 'structs/workout_struct.dart';

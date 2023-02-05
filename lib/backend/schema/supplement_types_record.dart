@@ -11,18 +11,14 @@ abstract class SupplementTypesRecord
   static Serializer<SupplementTypesRecord> get serializer =>
       _$supplementTypesRecordSerializer;
 
-  String? get name;
-
-  String? get color;
+  SupplementTypeStruct get data;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
   static void _initializeBuilder(SupplementTypesRecordBuilder builder) =>
-      builder
-        ..name = ''
-        ..color = '';
+      builder..data = SupplementTypeStructBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('supplementTypes');
@@ -47,17 +43,17 @@ abstract class SupplementTypesRecord
 }
 
 Map<String, dynamic> createSupplementTypesRecordData({
-  String? name,
-  String? color,
+  SupplementTypeStruct? data,
 }) {
   final firestoreData = serializers.toFirestore(
     SupplementTypesRecord.serializer,
     SupplementTypesRecord(
-      (s) => s
-        ..name = name
-        ..color = color,
+      (s) => s..data = SupplementTypeStructBuilder(),
     ),
   );
+
+  // Handle nested data for "data" field.
+  addSupplementTypeStructData(firestoreData, data, 'data');
 
   return firestoreData;
 }

@@ -33,5 +33,55 @@ service cloud.firestore {
       allow read: if true;
     }
 
+
+    match /users/{parent}/customSupplements/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/customSupplements/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/selectedSupplements/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/selectedSupplements/{document} {
+      allow read: if true;
+    }
+
+
+    match /users/{parent}/supplementIntakes/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /{path=**}/supplementIntakes/{document} {
+      allow read: if true;
+    }
+
+
+    match /muscleGroupTypes/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
+
+    match /supplementUnitTypes/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
+    }
   }
 }

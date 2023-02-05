@@ -1,32 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'supplement_types_record.dart';
+part of 'supplement_intakes_record.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<SupplementTypesRecord> _$supplementTypesRecordSerializer =
-    new _$SupplementTypesRecordSerializer();
+Serializer<SupplementIntakesRecord> _$supplementIntakesRecordSerializer =
+    new _$SupplementIntakesRecordSerializer();
 
-class _$SupplementTypesRecordSerializer
-    implements StructuredSerializer<SupplementTypesRecord> {
+class _$SupplementIntakesRecordSerializer
+    implements StructuredSerializer<SupplementIntakesRecord> {
   @override
   final Iterable<Type> types = const [
-    SupplementTypesRecord,
-    _$SupplementTypesRecord
+    SupplementIntakesRecord,
+    _$SupplementIntakesRecord
   ];
   @override
-  final String wireName = 'SupplementTypesRecord';
+  final String wireName = 'SupplementIntakesRecord';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, SupplementTypesRecord object,
+      Serializers serializers, SupplementIntakesRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'data',
       serializers.serialize(object.data,
-          specifiedType: const FullType(SupplementTypeStruct)),
+          specifiedType: const FullType(SupplementIntakeStruct)),
     ];
     Object? value;
     value = object.ffRef;
@@ -41,10 +41,10 @@ class _$SupplementTypesRecordSerializer
   }
 
   @override
-  SupplementTypesRecord deserialize(
+  SupplementIntakesRecord deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SupplementTypesRecordBuilder();
+    final result = new SupplementIntakesRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -54,8 +54,8 @@ class _$SupplementTypesRecordSerializer
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SupplementTypeStruct))!
-              as SupplementTypeStruct);
+                  specifiedType: const FullType(SupplementIntakeStruct))!
+              as SupplementIntakeStruct);
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -70,34 +70,34 @@ class _$SupplementTypesRecordSerializer
   }
 }
 
-class _$SupplementTypesRecord extends SupplementTypesRecord {
+class _$SupplementIntakesRecord extends SupplementIntakesRecord {
   @override
-  final SupplementTypeStruct data;
+  final SupplementIntakeStruct data;
   @override
   final DocumentReference<Object?>? ffRef;
 
-  factory _$SupplementTypesRecord(
-          [void Function(SupplementTypesRecordBuilder)? updates]) =>
-      (new SupplementTypesRecordBuilder()..update(updates))._build();
+  factory _$SupplementIntakesRecord(
+          [void Function(SupplementIntakesRecordBuilder)? updates]) =>
+      (new SupplementIntakesRecordBuilder()..update(updates))._build();
 
-  _$SupplementTypesRecord._({required this.data, this.ffRef}) : super._() {
+  _$SupplementIntakesRecord._({required this.data, this.ffRef}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, r'SupplementTypesRecord', 'data');
+        data, r'SupplementIntakesRecord', 'data');
   }
 
   @override
-  SupplementTypesRecord rebuild(
-          void Function(SupplementTypesRecordBuilder) updates) =>
+  SupplementIntakesRecord rebuild(
+          void Function(SupplementIntakesRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SupplementTypesRecordBuilder toBuilder() =>
-      new SupplementTypesRecordBuilder()..replace(this);
+  SupplementIntakesRecordBuilder toBuilder() =>
+      new SupplementIntakesRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is SupplementTypesRecord &&
+    return other is SupplementIntakesRecord &&
         data == other.data &&
         ffRef == other.ffRef;
   }
@@ -109,31 +109,32 @@ class _$SupplementTypesRecord extends SupplementTypesRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'SupplementTypesRecord')
+    return (newBuiltValueToStringHelper(r'SupplementIntakesRecord')
           ..add('data', data)
           ..add('ffRef', ffRef))
         .toString();
   }
 }
 
-class SupplementTypesRecordBuilder
-    implements Builder<SupplementTypesRecord, SupplementTypesRecordBuilder> {
-  _$SupplementTypesRecord? _$v;
+class SupplementIntakesRecordBuilder
+    implements
+        Builder<SupplementIntakesRecord, SupplementIntakesRecordBuilder> {
+  _$SupplementIntakesRecord? _$v;
 
-  SupplementTypeStructBuilder? _data;
-  SupplementTypeStructBuilder get data =>
-      _$this._data ??= new SupplementTypeStructBuilder();
-  set data(SupplementTypeStructBuilder? data) => _$this._data = data;
+  SupplementIntakeStructBuilder? _data;
+  SupplementIntakeStructBuilder get data =>
+      _$this._data ??= new SupplementIntakeStructBuilder();
+  set data(SupplementIntakeStructBuilder? data) => _$this._data = data;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
-  SupplementTypesRecordBuilder() {
-    SupplementTypesRecord._initializeBuilder(this);
+  SupplementIntakesRecordBuilder() {
+    SupplementIntakesRecord._initializeBuilder(this);
   }
 
-  SupplementTypesRecordBuilder get _$this {
+  SupplementIntakesRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _data = $v.data.toBuilder();
@@ -144,24 +145,24 @@ class SupplementTypesRecordBuilder
   }
 
   @override
-  void replace(SupplementTypesRecord other) {
+  void replace(SupplementIntakesRecord other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$SupplementTypesRecord;
+    _$v = other as _$SupplementIntakesRecord;
   }
 
   @override
-  void update(void Function(SupplementTypesRecordBuilder)? updates) {
+  void update(void Function(SupplementIntakesRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  SupplementTypesRecord build() => _build();
+  SupplementIntakesRecord build() => _build();
 
-  _$SupplementTypesRecord _build() {
-    _$SupplementTypesRecord _$result;
+  _$SupplementIntakesRecord _build() {
+    _$SupplementIntakesRecord _$result;
     try {
       _$result = _$v ??
-          new _$SupplementTypesRecord._(data: data.build(), ffRef: ffRef);
+          new _$SupplementIntakesRecord._(data: data.build(), ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {
@@ -169,7 +170,7 @@ class SupplementTypesRecordBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'SupplementTypesRecord', _$failedField, e.toString());
+            r'SupplementIntakesRecord', _$failedField, e.toString());
       }
       rethrow;
     }

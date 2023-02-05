@@ -40,8 +40,8 @@ class _$SupplementTypeStructSerializer
     if (value != null) {
       result
         ..add('color')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(Color)));
     }
     return result;
   }
@@ -64,7 +64,7 @@ class _$SupplementTypeStructSerializer
           break;
         case 'color':
           result.color = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+              specifiedType: const FullType(Color)) as Color?;
           break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
@@ -82,7 +82,7 @@ class _$SupplementTypeStruct extends SupplementTypeStruct {
   @override
   final String? name;
   @override
-  final String? color;
+  final Color? color;
   @override
   final FirestoreUtilData firestoreUtilData;
 
@@ -139,9 +139,9 @@ class SupplementTypeStructBuilder
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
-  String? _color;
-  String? get color => _$this._color;
-  set color(String? color) => _$this._color = color;
+  Color? _color;
+  Color? get color => _$this._color;
+  set color(Color? color) => _$this._color = color;
 
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;

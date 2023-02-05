@@ -30,3 +30,22 @@ String formatDuration(int duration) {
       .toString()
       .split(".")[0];
 }
+
+bool containsSupName(
+  List<SupplementTypeStruct> list,
+  String name,
+) {
+  // get if list contains name
+  for (var item in list) {
+    if (item.name == name) return true;
+  }
+  return false;
+}
+
+String? getExerciseName(DocumentReference exercise) {
+  FirebaseFirestore.instance
+      .collection('presetExercises')
+      .doc(exercise.id)
+      .get()
+      .data()['name'];
+}

@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'supplement_types_record.dart';
+part of 'custom_supplements_record.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<SupplementTypesRecord> _$supplementTypesRecordSerializer =
-    new _$SupplementTypesRecordSerializer();
+Serializer<CustomSupplementsRecord> _$customSupplementsRecordSerializer =
+    new _$CustomSupplementsRecordSerializer();
 
-class _$SupplementTypesRecordSerializer
-    implements StructuredSerializer<SupplementTypesRecord> {
+class _$CustomSupplementsRecordSerializer
+    implements StructuredSerializer<CustomSupplementsRecord> {
   @override
   final Iterable<Type> types = const [
-    SupplementTypesRecord,
-    _$SupplementTypesRecord
+    CustomSupplementsRecord,
+    _$CustomSupplementsRecord
   ];
   @override
-  final String wireName = 'SupplementTypesRecord';
+  final String wireName = 'CustomSupplementsRecord';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, SupplementTypesRecord object,
+      Serializers serializers, CustomSupplementsRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'data',
@@ -41,10 +41,10 @@ class _$SupplementTypesRecordSerializer
   }
 
   @override
-  SupplementTypesRecord deserialize(
+  CustomSupplementsRecord deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SupplementTypesRecordBuilder();
+    final result = new CustomSupplementsRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -70,34 +70,34 @@ class _$SupplementTypesRecordSerializer
   }
 }
 
-class _$SupplementTypesRecord extends SupplementTypesRecord {
+class _$CustomSupplementsRecord extends CustomSupplementsRecord {
   @override
   final SupplementTypeStruct data;
   @override
   final DocumentReference<Object?>? ffRef;
 
-  factory _$SupplementTypesRecord(
-          [void Function(SupplementTypesRecordBuilder)? updates]) =>
-      (new SupplementTypesRecordBuilder()..update(updates))._build();
+  factory _$CustomSupplementsRecord(
+          [void Function(CustomSupplementsRecordBuilder)? updates]) =>
+      (new CustomSupplementsRecordBuilder()..update(updates))._build();
 
-  _$SupplementTypesRecord._({required this.data, this.ffRef}) : super._() {
+  _$CustomSupplementsRecord._({required this.data, this.ffRef}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
-        data, r'SupplementTypesRecord', 'data');
+        data, r'CustomSupplementsRecord', 'data');
   }
 
   @override
-  SupplementTypesRecord rebuild(
-          void Function(SupplementTypesRecordBuilder) updates) =>
+  CustomSupplementsRecord rebuild(
+          void Function(CustomSupplementsRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SupplementTypesRecordBuilder toBuilder() =>
-      new SupplementTypesRecordBuilder()..replace(this);
+  CustomSupplementsRecordBuilder toBuilder() =>
+      new CustomSupplementsRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is SupplementTypesRecord &&
+    return other is CustomSupplementsRecord &&
         data == other.data &&
         ffRef == other.ffRef;
   }
@@ -109,16 +109,17 @@ class _$SupplementTypesRecord extends SupplementTypesRecord {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'SupplementTypesRecord')
+    return (newBuiltValueToStringHelper(r'CustomSupplementsRecord')
           ..add('data', data)
           ..add('ffRef', ffRef))
         .toString();
   }
 }
 
-class SupplementTypesRecordBuilder
-    implements Builder<SupplementTypesRecord, SupplementTypesRecordBuilder> {
-  _$SupplementTypesRecord? _$v;
+class CustomSupplementsRecordBuilder
+    implements
+        Builder<CustomSupplementsRecord, CustomSupplementsRecordBuilder> {
+  _$CustomSupplementsRecord? _$v;
 
   SupplementTypeStructBuilder? _data;
   SupplementTypeStructBuilder get data =>
@@ -129,11 +130,11 @@ class SupplementTypesRecordBuilder
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
-  SupplementTypesRecordBuilder() {
-    SupplementTypesRecord._initializeBuilder(this);
+  CustomSupplementsRecordBuilder() {
+    CustomSupplementsRecord._initializeBuilder(this);
   }
 
-  SupplementTypesRecordBuilder get _$this {
+  CustomSupplementsRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _data = $v.data.toBuilder();
@@ -144,24 +145,24 @@ class SupplementTypesRecordBuilder
   }
 
   @override
-  void replace(SupplementTypesRecord other) {
+  void replace(CustomSupplementsRecord other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$SupplementTypesRecord;
+    _$v = other as _$CustomSupplementsRecord;
   }
 
   @override
-  void update(void Function(SupplementTypesRecordBuilder)? updates) {
+  void update(void Function(CustomSupplementsRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  SupplementTypesRecord build() => _build();
+  CustomSupplementsRecord build() => _build();
 
-  _$SupplementTypesRecord _build() {
-    _$SupplementTypesRecord _$result;
+  _$CustomSupplementsRecord _build() {
+    _$CustomSupplementsRecord _$result;
     try {
       _$result = _$v ??
-          new _$SupplementTypesRecord._(data: data.build(), ffRef: ffRef);
+          new _$CustomSupplementsRecord._(data: data.build(), ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {
@@ -169,7 +170,7 @@ class SupplementTypesRecordBuilder
         data.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            r'SupplementTypesRecord', _$failedField, e.toString());
+            r'CustomSupplementsRecord', _$failedField, e.toString());
       }
       rethrow;
     }

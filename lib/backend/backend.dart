@@ -9,6 +9,11 @@ import 'schema/users_record.dart';
 import 'schema/supplement_types_record.dart';
 import 'schema/preset_exercises_record.dart';
 import 'schema/workouts_record.dart';
+import 'schema/custom_supplements_record.dart';
+import 'schema/selected_supplements_record.dart';
+import 'schema/supplement_intakes_record.dart';
+import 'schema/muscle_group_types_record.dart';
+import 'schema/supplement_unit_types_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -20,6 +25,11 @@ export 'schema/users_record.dart';
 export 'schema/supplement_types_record.dart';
 export 'schema/preset_exercises_record.dart';
 export 'schema/workouts_record.dart';
+export 'schema/custom_supplements_record.dart';
+export 'schema/selected_supplements_record.dart';
+export 'schema/supplement_intakes_record.dart';
+export 'schema/muscle_group_types_record.dart';
+export 'schema/supplement_unit_types_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -232,6 +242,283 @@ Future<FFFirestorePage<WorkoutsRecord>> queryWorkoutsRecordPage({
       pageSize: pageSize,
       isStream: isStream,
     );
+
+/// Functions to query CustomSupplementsRecords (as a Stream and as a Future).
+Future<int> queryCustomSupplementsRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      CustomSupplementsRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<CustomSupplementsRecord>> queryCustomSupplementsRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      CustomSupplementsRecord.collection(parent),
+      CustomSupplementsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<CustomSupplementsRecord>> queryCustomSupplementsRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      CustomSupplementsRecord.collection(parent),
+      CustomSupplementsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<CustomSupplementsRecord>>
+    queryCustomSupplementsRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          CustomSupplementsRecord.collection(parent),
+          CustomSupplementsRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query SelectedSupplementsRecords (as a Stream and as a Future).
+Future<int> querySelectedSupplementsRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      SelectedSupplementsRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<SelectedSupplementsRecord>> querySelectedSupplementsRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      SelectedSupplementsRecord.collection(parent),
+      SelectedSupplementsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<SelectedSupplementsRecord>> querySelectedSupplementsRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      SelectedSupplementsRecord.collection(parent),
+      SelectedSupplementsRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<SelectedSupplementsRecord>>
+    querySelectedSupplementsRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          SelectedSupplementsRecord.collection(parent),
+          SelectedSupplementsRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query SupplementIntakesRecords (as a Stream and as a Future).
+Future<int> querySupplementIntakesRecordCount({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      SupplementIntakesRecord.collection(parent),
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<SupplementIntakesRecord>> querySupplementIntakesRecord({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      SupplementIntakesRecord.collection(parent),
+      SupplementIntakesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<SupplementIntakesRecord>> querySupplementIntakesRecordOnce({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      SupplementIntakesRecord.collection(parent),
+      SupplementIntakesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<SupplementIntakesRecord>>
+    querySupplementIntakesRecordPage({
+  DocumentReference? parent,
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          SupplementIntakesRecord.collection(parent),
+          SupplementIntakesRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query MuscleGroupTypesRecords (as a Stream and as a Future).
+Future<int> queryMuscleGroupTypesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      MuscleGroupTypesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<MuscleGroupTypesRecord>> queryMuscleGroupTypesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      MuscleGroupTypesRecord.collection,
+      MuscleGroupTypesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<MuscleGroupTypesRecord>> queryMuscleGroupTypesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      MuscleGroupTypesRecord.collection,
+      MuscleGroupTypesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<MuscleGroupTypesRecord>>
+    queryMuscleGroupTypesRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          MuscleGroupTypesRecord.collection,
+          MuscleGroupTypesRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
+
+/// Functions to query SupplementUnitTypesRecords (as a Stream and as a Future).
+Future<int> querySupplementUnitTypesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      SupplementUnitTypesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<SupplementUnitTypesRecord>> querySupplementUnitTypesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      SupplementUnitTypesRecord.collection,
+      SupplementUnitTypesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<SupplementUnitTypesRecord>> querySupplementUnitTypesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      SupplementUnitTypesRecord.collection,
+      SupplementUnitTypesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<SupplementUnitTypesRecord>>
+    querySupplementUnitTypesRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+        queryCollectionPage(
+          SupplementUnitTypesRecord.collection,
+          SupplementUnitTypesRecord.serializer,
+          queryBuilder: queryBuilder,
+          nextPageMarker: nextPageMarker,
+          pageSize: pageSize,
+          isStream: isStream,
+        );
 
 Future<int> queryCollectionCount(
   Query collection, {

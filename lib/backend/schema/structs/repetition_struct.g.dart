@@ -32,12 +32,6 @@ class _$RepetitionStructSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.times;
-    if (value != null) {
-      result
-        ..add('times')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.exercise;
     if (value != null) {
       result
@@ -45,6 +39,13 @@ class _$RepetitionStructSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(
                 DocumentReference, const [const FullType.nullable(Object)])));
+    }
+    value = object.times;
+    if (value != null) {
+      result
+        ..add('times')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
     }
     return result;
   }
@@ -65,15 +66,15 @@ class _$RepetitionStructSerializer
           result.weight = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
-        case 'times':
-          result.times = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'exercise':
           result.exercise = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
                 const FullType.nullable(Object)
               ])) as DocumentReference<Object?>?;
+          break;
+        case 'times':
+          result.times = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
           break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
@@ -91,9 +92,9 @@ class _$RepetitionStruct extends RepetitionStruct {
   @override
   final double? weight;
   @override
-  final int? times;
-  @override
   final DocumentReference<Object?>? exercise;
+  @override
+  final double? times;
   @override
   final FirestoreUtilData firestoreUtilData;
 
@@ -102,7 +103,7 @@ class _$RepetitionStruct extends RepetitionStruct {
       (new RepetitionStructBuilder()..update(updates))._build();
 
   _$RepetitionStruct._(
-      {this.weight, this.times, this.exercise, required this.firestoreUtilData})
+      {this.weight, this.exercise, this.times, required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         firestoreUtilData, r'RepetitionStruct', 'firestoreUtilData');
@@ -121,15 +122,15 @@ class _$RepetitionStruct extends RepetitionStruct {
     if (identical(other, this)) return true;
     return other is RepetitionStruct &&
         weight == other.weight &&
-        times == other.times &&
         exercise == other.exercise &&
+        times == other.times &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, weight.hashCode), times.hashCode), exercise.hashCode),
+        $jc($jc($jc(0, weight.hashCode), exercise.hashCode), times.hashCode),
         firestoreUtilData.hashCode));
   }
 
@@ -137,8 +138,8 @@ class _$RepetitionStruct extends RepetitionStruct {
   String toString() {
     return (newBuiltValueToStringHelper(r'RepetitionStruct')
           ..add('weight', weight)
-          ..add('times', times)
           ..add('exercise', exercise)
+          ..add('times', times)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -152,14 +153,14 @@ class RepetitionStructBuilder
   double? get weight => _$this._weight;
   set weight(double? weight) => _$this._weight = weight;
 
-  int? _times;
-  int? get times => _$this._times;
-  set times(int? times) => _$this._times = times;
-
   DocumentReference<Object?>? _exercise;
   DocumentReference<Object?>? get exercise => _$this._exercise;
   set exercise(DocumentReference<Object?>? exercise) =>
       _$this._exercise = exercise;
+
+  double? _times;
+  double? get times => _$this._times;
+  set times(double? times) => _$this._times = times;
 
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
@@ -174,8 +175,8 @@ class RepetitionStructBuilder
     final $v = _$v;
     if ($v != null) {
       _weight = $v.weight;
-      _times = $v.times;
       _exercise = $v.exercise;
+      _times = $v.times;
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -200,8 +201,8 @@ class RepetitionStructBuilder
     final _$result = _$v ??
         new _$RepetitionStruct._(
             weight: weight,
-            times: times,
             exercise: exercise,
+            times: times,
             firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
                 firestoreUtilData, r'RepetitionStruct', 'firestoreUtilData'));
     replace(_$result);

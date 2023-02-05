@@ -11,17 +11,20 @@ abstract class SupplementIntakeStruct
   static Serializer<SupplementIntakeStruct> get serializer =>
       _$supplementIntakeStructSerializer;
 
+  double? get amount;
+
   SupplementTypeStruct get supplementType;
 
-  int? get amount;
+  String? get supUnitType;
 
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
 
   static void _initializeBuilder(SupplementIntakeStructBuilder builder) =>
       builder
+        ..amount = 0.0
         ..supplementType = SupplementTypeStructBuilder()
-        ..amount = 0
+        ..supUnitType = ''
         ..firestoreUtilData = FirestoreUtilData();
 
   SupplementIntakeStruct._();
@@ -31,8 +34,9 @@ abstract class SupplementIntakeStruct
 }
 
 SupplementIntakeStruct createSupplementIntakeStruct({
+  double? amount,
   SupplementTypeStruct? supplementType,
-  int? amount,
+  String? supUnitType,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -40,9 +44,10 @@ SupplementIntakeStruct createSupplementIntakeStruct({
 }) =>
     SupplementIntakeStruct(
       (s) => s
+        ..amount = amount
         ..supplementType =
             supplementType?.toBuilder() ?? SupplementTypeStructBuilder()
-        ..amount = amount
+        ..supUnitType = supUnitType
         ..firestoreUtilData = FirestoreUtilData(
           clearUnsetFields: clearUnsetFields,
           create: create,

@@ -18,9 +18,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
   Iterable<Object?> serialize(Serializers serializers, UsersRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'supplements',
-      serializers.serialize(object.supplements,
-          specifiedType: const FullType(SupplementsStruct)),
       'goals',
       serializers.serialize(object.goals,
           specifiedType: const FullType(GoalsStruct)),
@@ -164,14 +161,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
-    value = object.supplementIntakes;
-    if (value != null) {
-      result
-        ..add('supplementIntakes')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(SupplementIntakeStruct)])));
-    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -274,17 +263,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.registeredAt = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
-        case 'supplementIntakes':
-          result.supplementIntakes.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(SupplementIntakeStruct)
-              ]))! as BuiltList<Object?>);
-          break;
-        case 'supplements':
-          result.supplements.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SupplementsStruct))!
-              as SupplementsStruct);
-          break;
         case 'goals':
           result.goals.replace(serializers.deserialize(value,
               specifiedType: const FullType(GoalsStruct))! as GoalsStruct);
@@ -344,10 +322,6 @@ class _$UsersRecord extends UsersRecord {
   @override
   final DateTime? registeredAt;
   @override
-  final BuiltList<SupplementIntakeStruct>? supplementIntakes;
-  @override
-  final SupplementsStruct supplements;
-  @override
   final GoalsStruct goals;
   @override
   final DocumentReference<Object?>? ffRef;
@@ -376,13 +350,9 @@ class _$UsersRecord extends UsersRecord {
       this.isMetricUnit,
       this.isPremium,
       this.registeredAt,
-      this.supplementIntakes,
-      required this.supplements,
       required this.goals,
       this.ffRef})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        supplements, r'UsersRecord', 'supplements');
     BuiltValueNullFieldError.checkNotNull(goals, r'UsersRecord', 'goals');
   }
 
@@ -417,8 +387,6 @@ class _$UsersRecord extends UsersRecord {
         isMetricUnit == other.isMetricUnit &&
         isPremium == other.isPremium &&
         registeredAt == other.registeredAt &&
-        supplementIntakes == other.supplementIntakes &&
-        supplements == other.supplements &&
         goals == other.goals &&
         ffRef == other.ffRef;
   }
@@ -443,24 +411,24 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode),
-                                                                                phoneNumber.hashCode),
-                                                                            adId.hashCode),
-                                                                        name.hashCode),
-                                                                    userName.hashCode),
-                                                                gender.hashCode),
-                                                            dateOfBirth.hashCode),
-                                                        height.hashCode),
-                                                    weight.hashCode),
-                                                country.hashCode),
-                                            city.hashCode),
-                                        bodyType.hashCode),
-                                    experience.hashCode),
-                                isMetricUnit.hashCode),
-                            isPremium.hashCode),
-                        registeredAt.hashCode),
-                    supplementIntakes.hashCode),
-                supplements.hashCode),
+                                                                            $jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode),
+                                                                                uid.hashCode),
+                                                                            createdTime.hashCode),
+                                                                        phoneNumber.hashCode),
+                                                                    adId.hashCode),
+                                                                name.hashCode),
+                                                            userName.hashCode),
+                                                        gender.hashCode),
+                                                    dateOfBirth.hashCode),
+                                                height.hashCode),
+                                            weight.hashCode),
+                                        country.hashCode),
+                                    city.hashCode),
+                                bodyType.hashCode),
+                            experience.hashCode),
+                        isMetricUnit.hashCode),
+                    isPremium.hashCode),
+                registeredAt.hashCode),
             goals.hashCode),
         ffRef.hashCode));
   }
@@ -488,8 +456,6 @@ class _$UsersRecord extends UsersRecord {
           ..add('isMetricUnit', isMetricUnit)
           ..add('isPremium', isPremium)
           ..add('registeredAt', registeredAt)
-          ..add('supplementIntakes', supplementIntakes)
-          ..add('supplements', supplements)
           ..add('goals', goals)
           ..add('ffRef', ffRef))
         .toString();
@@ -580,19 +546,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   set registeredAt(DateTime? registeredAt) =>
       _$this._registeredAt = registeredAt;
 
-  ListBuilder<SupplementIntakeStruct>? _supplementIntakes;
-  ListBuilder<SupplementIntakeStruct> get supplementIntakes =>
-      _$this._supplementIntakes ??= new ListBuilder<SupplementIntakeStruct>();
-  set supplementIntakes(
-          ListBuilder<SupplementIntakeStruct>? supplementIntakes) =>
-      _$this._supplementIntakes = supplementIntakes;
-
-  SupplementsStructBuilder? _supplements;
-  SupplementsStructBuilder get supplements =>
-      _$this._supplements ??= new SupplementsStructBuilder();
-  set supplements(SupplementsStructBuilder? supplements) =>
-      _$this._supplements = supplements;
-
   GoalsStructBuilder? _goals;
   GoalsStructBuilder get goals => _$this._goals ??= new GoalsStructBuilder();
   set goals(GoalsStructBuilder? goals) => _$this._goals = goals;
@@ -628,8 +581,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _isMetricUnit = $v.isMetricUnit;
       _isPremium = $v.isPremium;
       _registeredAt = $v.registeredAt;
-      _supplementIntakes = $v.supplementIntakes?.toBuilder();
-      _supplements = $v.supplements.toBuilder();
       _goals = $v.goals.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
@@ -676,17 +627,11 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
               isMetricUnit: isMetricUnit,
               isPremium: isPremium,
               registeredAt: registeredAt,
-              supplementIntakes: _supplementIntakes?.build(),
-              supplements: supplements.build(),
               goals: goals.build(),
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'supplementIntakes';
-        _supplementIntakes?.build();
-        _$failedField = 'supplements';
-        supplements.build();
         _$failedField = 'goals';
         goals.build();
       } catch (e) {

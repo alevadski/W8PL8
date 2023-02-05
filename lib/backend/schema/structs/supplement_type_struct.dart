@@ -13,14 +13,13 @@ abstract class SupplementTypeStruct
 
   String? get name;
 
-  String? get color;
+  Color? get color;
 
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
 
   static void _initializeBuilder(SupplementTypeStructBuilder builder) => builder
     ..name = ''
-    ..color = ''
     ..firestoreUtilData = FirestoreUtilData();
 
   SupplementTypeStruct._();
@@ -31,7 +30,7 @@ abstract class SupplementTypeStruct
 
 SupplementTypeStruct createSupplementTypeStruct({
   String? name,
-  String? color,
+  Color? color,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,

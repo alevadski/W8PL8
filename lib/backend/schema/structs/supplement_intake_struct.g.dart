@@ -36,7 +36,15 @@ class _$SupplementIntakeStructSerializer
     if (value != null) {
       result
         ..add('amount')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.supUnitType;
+    if (value != null) {
+      result
+        ..add('supUnitType')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -53,14 +61,18 @@ class _$SupplementIntakeStructSerializer
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
+        case 'amount':
+          result.amount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
         case 'supplementType':
           result.supplementType.replace(serializers.deserialize(value,
                   specifiedType: const FullType(SupplementTypeStruct))!
               as SupplementTypeStruct);
           break;
-        case 'amount':
-          result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+        case 'supUnitType':
+          result.supUnitType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
@@ -76,9 +88,11 @@ class _$SupplementIntakeStructSerializer
 
 class _$SupplementIntakeStruct extends SupplementIntakeStruct {
   @override
+  final double? amount;
+  @override
   final SupplementTypeStruct supplementType;
   @override
-  final int? amount;
+  final String? supUnitType;
   @override
   final FirestoreUtilData firestoreUtilData;
 
@@ -87,8 +101,9 @@ class _$SupplementIntakeStruct extends SupplementIntakeStruct {
       (new SupplementIntakeStructBuilder()..update(updates))._build();
 
   _$SupplementIntakeStruct._(
-      {required this.supplementType,
-      this.amount,
+      {this.amount,
+      required this.supplementType,
+      this.supUnitType,
       required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -110,22 +125,26 @@ class _$SupplementIntakeStruct extends SupplementIntakeStruct {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is SupplementIntakeStruct &&
-        supplementType == other.supplementType &&
         amount == other.amount &&
+        supplementType == other.supplementType &&
+        supUnitType == other.supUnitType &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, supplementType.hashCode), amount.hashCode),
+    return $jf($jc(
+        $jc($jc($jc(0, amount.hashCode), supplementType.hashCode),
+            supUnitType.hashCode),
         firestoreUtilData.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'SupplementIntakeStruct')
-          ..add('supplementType', supplementType)
           ..add('amount', amount)
+          ..add('supplementType', supplementType)
+          ..add('supUnitType', supUnitType)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -135,15 +154,19 @@ class SupplementIntakeStructBuilder
     implements Builder<SupplementIntakeStruct, SupplementIntakeStructBuilder> {
   _$SupplementIntakeStruct? _$v;
 
+  double? _amount;
+  double? get amount => _$this._amount;
+  set amount(double? amount) => _$this._amount = amount;
+
   SupplementTypeStructBuilder? _supplementType;
   SupplementTypeStructBuilder get supplementType =>
       _$this._supplementType ??= new SupplementTypeStructBuilder();
   set supplementType(SupplementTypeStructBuilder? supplementType) =>
       _$this._supplementType = supplementType;
 
-  int? _amount;
-  int? get amount => _$this._amount;
-  set amount(int? amount) => _$this._amount = amount;
+  String? _supUnitType;
+  String? get supUnitType => _$this._supUnitType;
+  set supUnitType(String? supUnitType) => _$this._supUnitType = supUnitType;
 
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
@@ -157,8 +180,9 @@ class SupplementIntakeStructBuilder
   SupplementIntakeStructBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _supplementType = $v.supplementType.toBuilder();
       _amount = $v.amount;
+      _supplementType = $v.supplementType.toBuilder();
+      _supUnitType = $v.supUnitType;
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -184,8 +208,9 @@ class SupplementIntakeStructBuilder
     try {
       _$result = _$v ??
           new _$SupplementIntakeStruct._(
-              supplementType: supplementType.build(),
               amount: amount,
+              supplementType: supplementType.build(),
+              supUnitType: supUnitType,
               firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
                   firestoreUtilData,
                   r'SupplementIntakeStruct',

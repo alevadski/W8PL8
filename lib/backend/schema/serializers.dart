@@ -5,6 +5,11 @@ import 'users_record.dart';
 import 'supplement_types_record.dart';
 import 'preset_exercises_record.dart';
 import 'workouts_record.dart';
+import 'custom_supplements_record.dart';
+import 'selected_supplements_record.dart';
+import 'supplement_intakes_record.dart';
+import 'muscle_group_types_record.dart';
+import 'supplement_unit_types_record.dart';
 
 import 'index.dart';
 
@@ -19,6 +24,11 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   SupplementTypesRecord,
   PresetExercisesRecord,
   WorkoutsRecord,
+  CustomSupplementsRecord,
+  SelectedSupplementsRecord,
+  SupplementIntakesRecord,
+  MuscleGroupTypesRecord,
+  SupplementUnitTypesRecord,
   ExerciseGoalStruct,
   StreakGoalStruct,
   ExerciseGoalTargetStruct,
@@ -27,7 +37,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   SupplementIntakeStruct,
   SupplementTypeStruct,
   RepetitionStruct,
-  SupplementsStruct,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

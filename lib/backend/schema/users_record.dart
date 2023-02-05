@@ -53,10 +53,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   DateTime? get registeredAt;
 
-  BuiltList<SupplementIntakeStruct>? get supplementIntakes;
-
-  SupplementsStruct get supplements;
-
   GoalsStruct get goals;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
@@ -81,8 +77,6 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..experience = ''
     ..isMetricUnit = false
     ..isPremium = false
-    ..supplementIntakes = ListBuilder()
-    ..supplements = SupplementsStructBuilder()
     ..goals = GoalsStructBuilder();
 
   static CollectionReference get collection =>
@@ -127,7 +121,6 @@ Map<String, dynamic> createUsersRecordData({
   bool? isMetricUnit,
   bool? isPremium,
   DateTime? registeredAt,
-  SupplementsStruct? supplements,
   GoalsStruct? goals,
 }) {
   final firestoreData = serializers.toFirestore(
@@ -154,14 +147,9 @@ Map<String, dynamic> createUsersRecordData({
         ..isMetricUnit = isMetricUnit
         ..isPremium = isPremium
         ..registeredAt = registeredAt
-        ..supplementIntakes = null
-        ..supplements = SupplementsStructBuilder()
         ..goals = GoalsStructBuilder(),
     ),
   );
-
-  // Handle nested data for "supplements" field.
-  addSupplementsStructData(firestoreData, supplements, 'supplements');
 
   // Handle nested data for "goals" field.
   addGoalsStructData(firestoreData, goals, 'goals');

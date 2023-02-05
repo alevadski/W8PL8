@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'preset_exercises_record.dart';
+part of 'muscle_group_types_record.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<PresetExercisesRecord> _$presetExercisesRecordSerializer =
-    new _$PresetExercisesRecordSerializer();
+Serializer<MuscleGroupTypesRecord> _$muscleGroupTypesRecordSerializer =
+    new _$MuscleGroupTypesRecordSerializer();
 
-class _$PresetExercisesRecordSerializer
-    implements StructuredSerializer<PresetExercisesRecord> {
+class _$MuscleGroupTypesRecordSerializer
+    implements StructuredSerializer<MuscleGroupTypesRecord> {
   @override
   final Iterable<Type> types = const [
-    PresetExercisesRecord,
-    _$PresetExercisesRecord
+    MuscleGroupTypesRecord,
+    _$MuscleGroupTypesRecord
   ];
   @override
-  final String wireName = 'PresetExercisesRecord';
+  final String wireName = 'MuscleGroupTypesRecord';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, PresetExercisesRecord object,
+      Serializers serializers, MuscleGroupTypesRecord object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
@@ -32,19 +32,12 @@ class _$PresetExercisesRecordSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.isDoubleWeight;
+    value = object.image;
     if (value != null) {
       result
-        ..add('isDoubleWeight')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
-    }
-    value = object.isBodyWeight;
-    if (value != null) {
-      result
-        ..add('isBodyWeight')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+        ..add('image')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
     value = object.ffRef;
     if (value != null) {
@@ -58,10 +51,10 @@ class _$PresetExercisesRecordSerializer
   }
 
   @override
-  PresetExercisesRecord deserialize(
+  MuscleGroupTypesRecord deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PresetExercisesRecordBuilder();
+    final result = new MuscleGroupTypesRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -73,13 +66,9 @@ class _$PresetExercisesRecordSerializer
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'isDoubleWeight':
-          result.isDoubleWeight = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
-          break;
-        case 'isBodyWeight':
-          result.isBodyWeight = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+        case 'image':
+          result.image = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -94,93 +83,78 @@ class _$PresetExercisesRecordSerializer
   }
 }
 
-class _$PresetExercisesRecord extends PresetExercisesRecord {
+class _$MuscleGroupTypesRecord extends MuscleGroupTypesRecord {
   @override
   final String? name;
   @override
-  final bool? isDoubleWeight;
-  @override
-  final bool? isBodyWeight;
+  final String? image;
   @override
   final DocumentReference<Object?>? ffRef;
 
-  factory _$PresetExercisesRecord(
-          [void Function(PresetExercisesRecordBuilder)? updates]) =>
-      (new PresetExercisesRecordBuilder()..update(updates))._build();
+  factory _$MuscleGroupTypesRecord(
+          [void Function(MuscleGroupTypesRecordBuilder)? updates]) =>
+      (new MuscleGroupTypesRecordBuilder()..update(updates))._build();
 
-  _$PresetExercisesRecord._(
-      {this.name, this.isDoubleWeight, this.isBodyWeight, this.ffRef})
-      : super._();
+  _$MuscleGroupTypesRecord._({this.name, this.image, this.ffRef}) : super._();
 
   @override
-  PresetExercisesRecord rebuild(
-          void Function(PresetExercisesRecordBuilder) updates) =>
+  MuscleGroupTypesRecord rebuild(
+          void Function(MuscleGroupTypesRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  PresetExercisesRecordBuilder toBuilder() =>
-      new PresetExercisesRecordBuilder()..replace(this);
+  MuscleGroupTypesRecordBuilder toBuilder() =>
+      new MuscleGroupTypesRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PresetExercisesRecord &&
+    return other is MuscleGroupTypesRecord &&
         name == other.name &&
-        isDoubleWeight == other.isDoubleWeight &&
-        isBodyWeight == other.isBodyWeight &&
+        image == other.image &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc($jc($jc(0, name.hashCode), isDoubleWeight.hashCode),
-            isBodyWeight.hashCode),
-        ffRef.hashCode));
+    return $jf($jc($jc($jc(0, name.hashCode), image.hashCode), ffRef.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'PresetExercisesRecord')
+    return (newBuiltValueToStringHelper(r'MuscleGroupTypesRecord')
           ..add('name', name)
-          ..add('isDoubleWeight', isDoubleWeight)
-          ..add('isBodyWeight', isBodyWeight)
+          ..add('image', image)
           ..add('ffRef', ffRef))
         .toString();
   }
 }
 
-class PresetExercisesRecordBuilder
-    implements Builder<PresetExercisesRecord, PresetExercisesRecordBuilder> {
-  _$PresetExercisesRecord? _$v;
+class MuscleGroupTypesRecordBuilder
+    implements Builder<MuscleGroupTypesRecord, MuscleGroupTypesRecordBuilder> {
+  _$MuscleGroupTypesRecord? _$v;
 
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
-  bool? _isDoubleWeight;
-  bool? get isDoubleWeight => _$this._isDoubleWeight;
-  set isDoubleWeight(bool? isDoubleWeight) =>
-      _$this._isDoubleWeight = isDoubleWeight;
-
-  bool? _isBodyWeight;
-  bool? get isBodyWeight => _$this._isBodyWeight;
-  set isBodyWeight(bool? isBodyWeight) => _$this._isBodyWeight = isBodyWeight;
+  String? _image;
+  String? get image => _$this._image;
+  set image(String? image) => _$this._image = image;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
 
-  PresetExercisesRecordBuilder() {
-    PresetExercisesRecord._initializeBuilder(this);
+  MuscleGroupTypesRecordBuilder() {
+    MuscleGroupTypesRecord._initializeBuilder(this);
   }
 
-  PresetExercisesRecordBuilder get _$this {
+  MuscleGroupTypesRecordBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
-      _isDoubleWeight = $v.isDoubleWeight;
-      _isBodyWeight = $v.isBodyWeight;
+      _image = $v.image;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -188,26 +162,22 @@ class PresetExercisesRecordBuilder
   }
 
   @override
-  void replace(PresetExercisesRecord other) {
+  void replace(MuscleGroupTypesRecord other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$PresetExercisesRecord;
+    _$v = other as _$MuscleGroupTypesRecord;
   }
 
   @override
-  void update(void Function(PresetExercisesRecordBuilder)? updates) {
+  void update(void Function(MuscleGroupTypesRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  PresetExercisesRecord build() => _build();
+  MuscleGroupTypesRecord build() => _build();
 
-  _$PresetExercisesRecord _build() {
+  _$MuscleGroupTypesRecord _build() {
     final _$result = _$v ??
-        new _$PresetExercisesRecord._(
-            name: name,
-            isDoubleWeight: isDoubleWeight,
-            isBodyWeight: isBodyWeight,
-            ffRef: ffRef);
+        new _$MuscleGroupTypesRecord._(name: name, image: image, ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

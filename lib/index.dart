@@ -8,3 +8,5 @@ export 'dashboard/dashboard_widget.dart' show DashboardWidget;
 export 'supplements/supplements_widget.dart' show SupplementsWidget;
 export 'goals/goals_widget.dart' show GoalsWidget;
 export 'active_workout/active_workout_widget.dart' show ActiveWorkoutWidget;
+export 'manage_supplements/manage_supplements_widget.dart'
+    show ManageSupplementsWidget;
