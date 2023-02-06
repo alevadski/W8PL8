@@ -43,12 +43,6 @@ class FFAppState extends ChangeNotifier {
     _selectedWeight = _value;
   }
 
-  double _selectedRepCount = 8;
-  double get selectedRepCount => _selectedRepCount;
-  set selectedRepCount(double _value) {
-    _selectedRepCount = _value;
-  }
-
   DocumentReference? _selectedExerciseRef;
   DocumentReference? get selectedExerciseRef => _selectedExerciseRef;
   set selectedExerciseRef(DocumentReference? _value) {
@@ -121,6 +115,12 @@ class FFAppState extends ChangeNotifier {
   Color get selectedSupColor => _selectedSupColor;
   set selectedSupColor(Color _value) {
     _selectedSupColor = _value;
+  }
+
+  double _selectedRepCount = 10;
+  double get selectedRepCount => _selectedRepCount;
+  set selectedRepCount(double _value) {
+    _selectedRepCount = _value;
   }
 }
 

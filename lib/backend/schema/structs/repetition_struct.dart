@@ -17,12 +17,15 @@ abstract class RepetitionStruct
 
   double? get times;
 
+  String? get name;
+
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
 
   static void _initializeBuilder(RepetitionStructBuilder builder) => builder
     ..weight = 0.0
     ..times = 0.0
+    ..name = ''
     ..firestoreUtilData = FirestoreUtilData();
 
   RepetitionStruct._();
@@ -34,6 +37,7 @@ RepetitionStruct createRepetitionStruct({
   double? weight,
   DocumentReference? exercise,
   double? times,
+  String? name,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -44,6 +48,7 @@ RepetitionStruct createRepetitionStruct({
         ..weight = weight
         ..exercise = exercise
         ..times = times
+        ..name = name
         ..firestoreUtilData = FirestoreUtilData(
           clearUnsetFields: clearUnsetFields,
           create: create,

@@ -41,11 +41,3 @@ bool containsSupName(
   }
   return false;
 }
-
-String? getExerciseName(DocumentReference exercise) {
-  FirebaseFirestore.instance
-      .collection('presetExercises')
-      .doc(exercise.id)
-      .get()
-      .data()['name'];
-}

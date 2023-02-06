@@ -4,6 +4,8 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../custom_code/actions/index.dart' as actions;
+import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -19,6 +21,7 @@ class ActiveWorkoutWidget extends StatefulWidget {
 }
 
 class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
+  List<RepetitionStruct>? getActiveWorkoutReps;
   WorkoutsRecord? currentWorkout;
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -33,14 +36,30 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
       logFirebaseEvent('ACTIVE_WORKOUT_ActiveWorkout_ON_LOAD');
       logFirebaseEvent('ActiveWorkout_backend_call');
 
-      final workoutsCreateData = createWorkoutsRecordData(
-        date: getCurrentTimestamp,
-      );
+      final workoutsCreateData = {
+        ...createWorkoutsRecordData(
+          date: getCurrentTimestamp,
+        ),
+        'repetitions': [
+          getRepetitionFirestoreData(
+            createRepetitionStruct(
+              weight: weightSliderValue,
+              clearUnsetFields: false,
+              create: true,
+            ),
+            true,
+          )
+        ],
+      };
       var workoutsRecordReference =
           WorkoutsRecord.createDoc(currentUserReference!);
       await workoutsRecordReference.set(workoutsCreateData);
       currentWorkout = WorkoutsRecord.getDocumentFromData(
           workoutsCreateData, workoutsRecordReference);
+      logFirebaseEvent('ActiveWorkout_custom_action');
+      getActiveWorkoutReps = await actions.getActiveWorkoutReps(
+        currentWorkout!.reference,
+      );
     });
 
     logFirebaseEvent('screen_view',
@@ -171,79 +190,66 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: StreamBuilder<List<WorkoutsRecord>>(
-                  stream: queryWorkoutsRecord(
-                    parent: currentUserReference,
-                    queryBuilder: (workoutsRecord) => workoutsRecord
-                        .where('date', isEqualTo: currentWorkout!.date),
-                    singleRecord: true,
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                        ),
-                      );
-                    }
-                    List<WorkoutsRecord> exerciseListWorkoutsRecordList =
-                        snapshot.data!;
-                    // Return an empty Container when the item does not exist.
-                    if (snapshot.data!.isEmpty) {
-                      return Container();
-                    }
-                    final exerciseListWorkoutsRecord =
-                        exerciseListWorkoutsRecordList.isNotEmpty
-                            ? exerciseListWorkoutsRecordList.first
-                            : null;
-                    return Builder(
-                      builder: (context) {
-                        final activeWorkoutExercises =
-                            exerciseListWorkoutsRecord!.repetitions!.toList();
-                        return ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemCount: activeWorkoutExercises.length,
-                          itemBuilder: (context, activeWorkoutExercisesIndex) {
-                            final activeWorkoutExercisesItem =
-                                activeWorkoutExercises[
-                                    activeWorkoutExercisesIndex];
-                            return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 16),
-                              child: Material(
-                                color: Colors.transparent,
-                                elevation: 4,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Padding(
+                child: Builder(
+                  builder: (context) {
+                    final activeWorkoutReps =
+                        getActiveWorkoutReps!.map((e) => e).toList();
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      itemCount: activeWorkoutReps.length,
+                      itemBuilder: (context, activeWorkoutRepsIndex) {
+                        final activeWorkoutRepsItem =
+                            activeWorkoutReps[activeWorkoutRepsIndex];
+                        return Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+                          child: Material(
+                            color: Colors.transparent,
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         16, 16, 0, 0),
                                     child: Text(
-                                      'Hello World',
+                                      random_data.randomString(
+                                        0,
+                                        0,
+                                        true,
+                                        false,
+                                        false,
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1,
                                     ),
                                   ),
-                                ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16, 16, 0, 0),
+                                    child: Text(
+                                      '${activeWorkoutRepsItem.weight?.toString()} kg X ${random_data.randomInteger(0, 10).toString()} times',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            );
-                          },
+                            ),
+                          ),
                         );
                       },
                     );
@@ -296,18 +302,19 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                                 );
                               }
                               List<PresetExercisesRecord>
-                                  listViewPresetExercisesRecordList =
+                                  exercisesListPresetExercisesRecordList =
                                   snapshot.data!;
                               return ListView.builder(
                                 padding: EdgeInsets.zero,
                                 primary: false,
                                 scrollDirection: Axis.horizontal,
                                 itemCount:
-                                    listViewPresetExercisesRecordList.length,
-                                itemBuilder: (context, listViewIndex) {
-                                  final listViewPresetExercisesRecord =
-                                      listViewPresetExercisesRecordList[
-                                          listViewIndex];
+                                    exercisesListPresetExercisesRecordList
+                                        .length,
+                                itemBuilder: (context, exercisesListIndex) {
+                                  final exercisesListPresetExercisesRecord =
+                                      exercisesListPresetExercisesRecordList[
+                                          exercisesListIndex];
                                   return Align(
                                     alignment: AlignmentDirectional(-1, 0),
                                     child: Padding(
@@ -321,15 +328,16 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                                               'Text_update_local_state');
                                           setState(() {
                                             FFAppState().selectedExercise =
-                                                listViewPresetExercisesRecord
+                                                exercisesListPresetExercisesRecord
                                                     .name!;
                                             FFAppState().selectedExerciseRef =
-                                                listViewPresetExercisesRecord
+                                                exercisesListPresetExercisesRecord
                                                     .reference;
                                           });
                                         },
                                         child: Text(
-                                          listViewPresetExercisesRecord.name!,
+                                          exercisesListPresetExercisesRecord
+                                              .name!,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyText1,
                                         ),
@@ -517,9 +525,9 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                               'repetitions': FieldValue.arrayUnion([
                                 getRepetitionFirestoreData(
                                   createRepetitionStruct(
-                                    weight: FFAppState().selectedWeight,
-                                    times: FFAppState().selectedRepCount,
+                                    weight: weightSliderValue,
                                     exercise: FFAppState().selectedExerciseRef,
+                                    times: repsSliderValue,
                                     clearUnsetFields: false,
                                   ),
                                   true,

@@ -47,6 +47,13 @@ class _$RepetitionStructSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
+    value = object.name;
+    if (value != null) {
+      result
+        ..add('name')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -76,6 +83,10 @@ class _$RepetitionStructSerializer
           result.times = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
                   specifiedType: const FullType(FirestoreUtilData))!
@@ -96,6 +107,8 @@ class _$RepetitionStruct extends RepetitionStruct {
   @override
   final double? times;
   @override
+  final String? name;
+  @override
   final FirestoreUtilData firestoreUtilData;
 
   factory _$RepetitionStruct(
@@ -103,7 +116,11 @@ class _$RepetitionStruct extends RepetitionStruct {
       (new RepetitionStructBuilder()..update(updates))._build();
 
   _$RepetitionStruct._(
-      {this.weight, this.exercise, this.times, required this.firestoreUtilData})
+      {this.weight,
+      this.exercise,
+      this.times,
+      this.name,
+      required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         firestoreUtilData, r'RepetitionStruct', 'firestoreUtilData');
@@ -124,13 +141,17 @@ class _$RepetitionStruct extends RepetitionStruct {
         weight == other.weight &&
         exercise == other.exercise &&
         times == other.times &&
+        name == other.name &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, weight.hashCode), exercise.hashCode), times.hashCode),
+        $jc(
+            $jc($jc($jc(0, weight.hashCode), exercise.hashCode),
+                times.hashCode),
+            name.hashCode),
         firestoreUtilData.hashCode));
   }
 
@@ -140,6 +161,7 @@ class _$RepetitionStruct extends RepetitionStruct {
           ..add('weight', weight)
           ..add('exercise', exercise)
           ..add('times', times)
+          ..add('name', name)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -162,6 +184,10 @@ class RepetitionStructBuilder
   double? get times => _$this._times;
   set times(double? times) => _$this._times = times;
 
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
   set firestoreUtilData(FirestoreUtilData? firestoreUtilData) =>
@@ -177,6 +203,7 @@ class RepetitionStructBuilder
       _weight = $v.weight;
       _exercise = $v.exercise;
       _times = $v.times;
+      _name = $v.name;
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -203,6 +230,7 @@ class RepetitionStructBuilder
             weight: weight,
             exercise: exercise,
             times: times,
+            name: name,
             firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
                 firestoreUtilData, r'RepetitionStruct', 'firestoreUtilData'));
     replace(_$result);
