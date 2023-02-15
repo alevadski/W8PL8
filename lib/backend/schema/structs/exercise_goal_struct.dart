@@ -17,13 +17,14 @@ abstract class ExerciseGoalStruct
 
   DateTime? get completedAt;
 
-  DocumentReference? get exerciseType;
+  ExerciseStruct get exercise;
 
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
 
   static void _initializeBuilder(ExerciseGoalStructBuilder builder) => builder
     ..target = ExerciseGoalTargetStructBuilder()
+    ..exercise = ExerciseStructBuilder()
     ..firestoreUtilData = FirestoreUtilData();
 
   ExerciseGoalStruct._();
@@ -36,7 +37,7 @@ ExerciseGoalStruct createExerciseGoalStruct({
   DateTime? createdAt,
   ExerciseGoalTargetStruct? target,
   DateTime? completedAt,
-  DocumentReference? exerciseType,
+  ExerciseStruct? exercise,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -47,7 +48,7 @@ ExerciseGoalStruct createExerciseGoalStruct({
         ..createdAt = createdAt
         ..target = target?.toBuilder() ?? ExerciseGoalTargetStructBuilder()
         ..completedAt = completedAt
-        ..exerciseType = exerciseType
+        ..exercise = exercise?.toBuilder() ?? ExerciseStructBuilder()
         ..firestoreUtilData = FirestoreUtilData(
           clearUnsetFields: clearUnsetFields,
           create: create,
@@ -108,6 +109,10 @@ Map<String, dynamic> getExerciseGoalFirestoreData(
   // Handle nested data for "target" field.
   addExerciseGoalTargetStructData(
       firestoreData, exerciseGoal.target, 'target', forFieldValue);
+
+  // Handle nested data for "exercise" field.
+  addExerciseStructData(
+      firestoreData, exerciseGoal.exercise, 'exercise', forFieldValue);
 
   // Add any Firestore field values
   exerciseGoal.firestoreUtilData.fieldValues

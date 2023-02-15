@@ -19,7 +19,17 @@ int showRegistration(bool register) {
   }
 }
 
-String formatDuration(int duration) {
+String formatDuration(
+  DateTime startAt,
+  DateTime? endAt,
+) {
+  if (endAt == null) {
+    return "ongoing";
+  }
+
+  Duration difference = endAt.difference(startAt);
+  int duration = difference.inSeconds;
+
   // get HH:mm:ss string from duration in seconds
   final hours = (duration / 3600).truncate();
   duration = duration % 3600;
@@ -40,4 +50,53 @@ bool containsSupName(
     if (item.name == name) return true;
   }
   return false;
+}
+
+double getTotalRepWeight(
+  double weight,
+  double times,
+) {
+  return weight * times;
+}
+
+String getAddGoalButtonName(DocumentReference? goalRef) {
+  if (goalRef != null) {
+    return "Save";
+  } else {
+    return "Add";
+  }
+}
+
+List<String> getMuscleGroupsFromSets(List<SetStruct> sets) {
+  Set<String> muscleGroupsSet = {};
+
+  sets.forEach((element) {
+    final group = element.exercise.muscleGroup;
+    if (group != null) {
+      muscleGroupsSet.add(group);
+    }
+  });
+  return muscleGroupsSet.toList();
+}
+
+List<SetStruct> updateSetList(
+  List<SetStruct> list,
+  int? index,
+  String exerciseName,
+  String muscleGroupName,
+  double setCount,
+  double repCount,
+) {
+  // https://community.flutterflow.io/c/discuss-and-get-help/data-type-creation-in-custom-function-action
+  // if (index != null) {
+  //   list[index] = createSetStruct(
+  //       times: setCount,
+  //       exercise: createExerciseStruct(
+  //           name: exerciseName,
+  //           isDoubleWeight: null,
+  //           isBodyWeight: null,
+  //           icon: null,
+  //           muscleGroup: muscleGroupName));
+  // }
+  return list;
 }

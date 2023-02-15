@@ -14,9 +14,9 @@ abstract class ExerciseGoalTargetStruct
 
   double? get weight;
 
-  int? get repetitions;
-
   bool? get both;
+
+  double? get repetitions;
 
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
@@ -24,8 +24,8 @@ abstract class ExerciseGoalTargetStruct
   static void _initializeBuilder(ExerciseGoalTargetStructBuilder builder) =>
       builder
         ..weight = 0.0
-        ..repetitions = 0
         ..both = false
+        ..repetitions = 0.0
         ..firestoreUtilData = FirestoreUtilData();
 
   ExerciseGoalTargetStruct._();
@@ -36,8 +36,8 @@ abstract class ExerciseGoalTargetStruct
 
 ExerciseGoalTargetStruct createExerciseGoalTargetStruct({
   double? weight,
-  int? repetitions,
   bool? both,
+  double? repetitions,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -46,8 +46,8 @@ ExerciseGoalTargetStruct createExerciseGoalTargetStruct({
     ExerciseGoalTargetStruct(
       (e) => e
         ..weight = weight
-        ..repetitions = repetitions
         ..both = both
+        ..repetitions = repetitions
         ..firestoreUtilData = FirestoreUtilData(
           clearUnsetFields: clearUnsetFields,
           create: create,

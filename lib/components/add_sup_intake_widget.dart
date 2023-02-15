@@ -9,22 +9,45 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'add_sup_intake_model.dart';
+export 'add_sup_intake_model.dart';
 
 class AddSupIntakeWidget extends StatefulWidget {
-  const AddSupIntakeWidget({Key? key}) : super(key: key);
+  const AddSupIntakeWidget({
+    Key? key,
+    this.supIntakeRef,
+    this.supIntakeData,
+  }) : super(key: key);
+
+  final DocumentReference? supIntakeRef;
+  final SupplementIntakeStruct? supIntakeData;
 
   @override
   _AddSupIntakeWidgetState createState() => _AddSupIntakeWidgetState();
 }
 
 class _AddSupIntakeWidgetState extends State<AddSupIntakeWidget> {
-  double? supUnitSliderValue;
+  late AddSupIntakeModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => AddSupIntakeModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -124,7 +147,7 @@ class _AddSupIntakeWidgetState extends State<AddSupIntakeWidget> {
                                   onTap: () async {
                                     logFirebaseEvent(
                                         'ADD_SUP_INTAKE_COMP_Row_68n02vl4_ON_TAP');
-                                    logFirebaseEvent('Row_update_local_state');
+                                    logFirebaseEvent('Row_update_app_state');
                                     FFAppState().update(() {
                                       FFAppState().selectedSupType =
                                           listViewSelectedSupplementsRecord
@@ -203,7 +226,7 @@ class _AddSupIntakeWidgetState extends State<AddSupIntakeWidget> {
                         onPressed: () async {
                           logFirebaseEvent(
                               'ADD_SUP_INTAKE_COMP_minus_ICN_ON_TAP');
-                          logFirebaseEvent('IconButton_update_local_state');
+                          logFirebaseEvent('IconButton_update_app_state');
                           setState(() {
                             FFAppState().selectedSupUnitValue =
                                 FFAppState().selectedSupUnitValue + -1.0;
@@ -217,21 +240,21 @@ class _AddSupIntakeWidgetState extends State<AddSupIntakeWidget> {
                           inactiveColor: Color(0xFF9E9E9E),
                           min: 1,
                           max: 100,
-                          value: supUnitSliderValue ??=
+                          value: _model.supUnitSliderValue ??=
                               FFAppState().selectedSupUnitValue,
-                          label: supUnitSliderValue.toString(),
+                          label: _model.supUnitSliderValue.toString(),
                           divisions: 99,
                           onChanged: (newValue) async {
                             newValue =
                                 double.parse(newValue.toStringAsFixed(0));
-                            setState(() => supUnitSliderValue = newValue);
+                            setState(
+                                () => _model.supUnitSliderValue = newValue);
                             logFirebaseEvent(
                                 'ADD_SUP_INTAKE_SupUnitSlider_ON_FORM_WID');
-                            logFirebaseEvent(
-                                'SupUnitSlider_update_local_state');
+                            logFirebaseEvent('SupUnitSlider_update_app_state');
                             setState(() {
                               FFAppState().selectedSupUnitValue =
-                                  supUnitSliderValue!;
+                                  _model.supUnitSliderValue!;
                             });
                           },
                         ),
@@ -249,7 +272,7 @@ class _AddSupIntakeWidgetState extends State<AddSupIntakeWidget> {
                         onPressed: () async {
                           logFirebaseEvent(
                               'ADD_SUP_INTAKE_COMP_plus_ICN_ON_TAP');
-                          logFirebaseEvent('IconButton_update_local_state');
+                          logFirebaseEvent('IconButton_update_app_state');
                           FFAppState().update(() {
                             FFAppState().selectedSupUnitValue =
                                 FFAppState().selectedSupUnitValue + 1.0;
@@ -299,8 +322,7 @@ class _AddSupIntakeWidgetState extends State<AddSupIntakeWidget> {
                                     onTap: () async {
                                       logFirebaseEvent(
                                           'ADD_SUP_INTAKE_COMP_Text_ok4oaihq_ON_TAP');
-                                      logFirebaseEvent(
-                                          'Text_update_local_state');
+                                      logFirebaseEvent('Text_update_app_state');
                                       setState(() {
                                         FFAppState().selectedSupUnitType =
                                             listViewSupplementUnitTypesRecord
@@ -330,26 +352,47 @@ class _AddSupIntakeWidgetState extends State<AddSupIntakeWidget> {
                       onPressed: () async {
                         logFirebaseEvent(
                             'ADD_SUP_INTAKE_COMP_ButtonAdd_ON_TAP');
-                        logFirebaseEvent('ButtonAdd_backend_call');
+                        if (widget.supIntakeRef != null) {
+                          logFirebaseEvent('ButtonAdd_backend_call');
 
-                        final supplementIntakesCreateData =
-                            createSupplementIntakesRecordData(
-                          data: createSupplementIntakeStruct(
-                            amount: FFAppState().selectedSupUnitValue,
-                            supplementType: createSupplementTypeStruct(
-                              name: FFAppState().selectedSupType,
-                              color: FFAppState().selectedSupColor,
+                          final supplementIntakesUpdateData =
+                              createSupplementIntakesRecordData(
+                            data: createSupplementIntakeStruct(
+                              amount: FFAppState().selectedSupUnitValue,
+                              supUnitType: FFAppState().selectedSupUnitType,
+                              supplementType: createSupplementTypeStruct(
+                                name: FFAppState().selectedSupType,
+                                color: FFAppState().selectedSupColor,
+                                clearUnsetFields: false,
+                              ),
+                              clearUnsetFields: false,
+                            ),
+                          );
+                          await widget.supIntakeRef!
+                              .update(supplementIntakesUpdateData);
+                        } else {
+                          logFirebaseEvent('ButtonAdd_backend_call');
+
+                          final supplementIntakesCreateData =
+                              createSupplementIntakesRecordData(
+                            data: createSupplementIntakeStruct(
+                              amount: FFAppState().selectedSupUnitValue,
+                              supplementType: createSupplementTypeStruct(
+                                name: FFAppState().selectedSupType,
+                                color: FFAppState().selectedSupColor,
+                                clearUnsetFields: false,
+                                create: true,
+                              ),
+                              supUnitType: FFAppState().selectedSupUnitType,
                               clearUnsetFields: false,
                               create: true,
                             ),
-                            supUnitType: FFAppState().selectedSupUnitType,
-                            clearUnsetFields: false,
-                            create: true,
-                          ),
-                        );
-                        await SupplementIntakesRecord.createDoc(
-                                currentUserReference!)
-                            .set(supplementIntakesCreateData);
+                          );
+                          await SupplementIntakesRecord.createDoc(
+                                  currentUserReference!)
+                              .set(supplementIntakesCreateData);
+                        }
+
                         logFirebaseEvent('ButtonAdd_navigate_back');
                         Navigator.pop(context);
                       },

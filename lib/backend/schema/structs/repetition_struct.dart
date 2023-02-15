@@ -13,11 +13,11 @@ abstract class RepetitionStruct
 
   double? get weight;
 
-  DocumentReference? get exercise;
-
   double? get times;
 
-  String? get name;
+  ExerciseStruct get exercise;
+
+  MuscleGroupStruct get muscleGroup;
 
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
@@ -25,7 +25,8 @@ abstract class RepetitionStruct
   static void _initializeBuilder(RepetitionStructBuilder builder) => builder
     ..weight = 0.0
     ..times = 0.0
-    ..name = ''
+    ..exercise = ExerciseStructBuilder()
+    ..muscleGroup = MuscleGroupStructBuilder()
     ..firestoreUtilData = FirestoreUtilData();
 
   RepetitionStruct._();
@@ -35,9 +36,9 @@ abstract class RepetitionStruct
 
 RepetitionStruct createRepetitionStruct({
   double? weight,
-  DocumentReference? exercise,
   double? times,
-  String? name,
+  ExerciseStruct? exercise,
+  MuscleGroupStruct? muscleGroup,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -46,9 +47,9 @@ RepetitionStruct createRepetitionStruct({
     RepetitionStruct(
       (r) => r
         ..weight = weight
-        ..exercise = exercise
         ..times = times
-        ..name = name
+        ..exercise = exercise?.toBuilder() ?? ExerciseStructBuilder()
+        ..muscleGroup = muscleGroup?.toBuilder() ?? MuscleGroupStructBuilder()
         ..firestoreUtilData = FirestoreUtilData(
           clearUnsetFields: clearUnsetFields,
           create: create,
@@ -103,6 +104,14 @@ Map<String, dynamic> getRepetitionFirestoreData(
   }
   final firestoreData =
       serializers.toFirestore(RepetitionStruct.serializer, repetition);
+
+  // Handle nested data for "exercise" field.
+  addExerciseStructData(
+      firestoreData, repetition.exercise, 'exercise', forFieldValue);
+
+  // Handle nested data for "muscleGroup" field.
+  addMuscleGroupStructData(
+      firestoreData, repetition.muscleGroup, 'muscleGroup', forFieldValue);
 
   // Add any Firestore field values
   repetition.firestoreUtilData.fieldValues

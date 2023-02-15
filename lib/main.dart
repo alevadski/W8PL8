@@ -144,7 +144,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'WorkoutLog': WorkoutLogWidget(),
       'Supplements': SupplementsWidget(),
       'Goals': GoalsWidget(),
-      'Profile': ProfileWidget(),
+      'Settings': SettingsWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
@@ -196,10 +196,10 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person_rounded,
+              Icons.person,
               size: 24,
             ),
-            label: 'Profile',
+            label: 'Home',
             tooltip: '',
           )
         ],

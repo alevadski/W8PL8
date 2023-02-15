@@ -17,6 +17,8 @@ abstract class PresetExercisesRecord
 
   bool? get isBodyWeight;
 
+  String? get muscleGroup;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -25,7 +27,8 @@ abstract class PresetExercisesRecord
       builder
         ..name = ''
         ..isDoubleWeight = false
-        ..isBodyWeight = false;
+        ..isBodyWeight = false
+        ..muscleGroup = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('presetExercises');
@@ -53,6 +56,7 @@ Map<String, dynamic> createPresetExercisesRecordData({
   String? name,
   bool? isDoubleWeight,
   bool? isBodyWeight,
+  String? muscleGroup,
 }) {
   final firestoreData = serializers.toFirestore(
     PresetExercisesRecord.serializer,
@@ -60,7 +64,8 @@ Map<String, dynamic> createPresetExercisesRecordData({
       (p) => p
         ..name = name
         ..isDoubleWeight = isDoubleWeight
-        ..isBodyWeight = isBodyWeight,
+        ..isBodyWeight = isBodyWeight
+        ..muscleGroup = muscleGroup,
     ),
   );
 

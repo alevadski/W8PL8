@@ -2,16 +2,20 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_timer.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
-import '../flutter_flow/random_data_util.dart' as random_data;
+import '../flutter_flow/custom_functions.dart' as functions;
+import 'dart:async';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'active_workout_model.dart';
+export 'active_workout_model.dart';
 
 class ActiveWorkoutWidget extends StatefulWidget {
   const ActiveWorkoutWidget({Key? key}) : super(key: key);
@@ -21,54 +25,44 @@ class ActiveWorkoutWidget extends StatefulWidget {
 }
 
 class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
-  List<RepetitionStruct>? getActiveWorkoutReps;
-  WorkoutsRecord? currentWorkout;
-  final _unfocusNode = FocusNode();
+  late ActiveWorkoutModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  double? repsSliderValue;
-  double? weightSliderValue;
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => ActiveWorkoutModel());
+
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'ActiveWorkout'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('ACTIVE_WORKOUT_ActiveWorkout_ON_LOAD');
       logFirebaseEvent('ActiveWorkout_backend_call');
 
-      final workoutsCreateData = {
-        ...createWorkoutsRecordData(
-          date: getCurrentTimestamp,
-        ),
-        'repetitions': [
-          getRepetitionFirestoreData(
-            createRepetitionStruct(
-              weight: weightSliderValue,
-              clearUnsetFields: false,
-              create: true,
-            ),
-            true,
-          )
-        ],
-      };
-      var workoutsRecordReference =
-          WorkoutsRecord.createDoc(currentUserReference!);
-      await workoutsRecordReference.set(workoutsCreateData);
-      currentWorkout = WorkoutsRecord.getDocumentFromData(
-          workoutsCreateData, workoutsRecordReference);
-      logFirebaseEvent('ActiveWorkout_custom_action');
-      getActiveWorkoutReps = await actions.getActiveWorkoutReps(
-        currentWorkout!.reference,
+      final workoutsCreateData = createWorkoutsRecordData(
+        startedAt: getCurrentTimestamp,
+        userRef: currentUserReference,
       );
+      var workoutsRecordReference = WorkoutsRecord.collection.doc();
+      await workoutsRecordReference.set(workoutsCreateData);
+      _model.currentWorkout = WorkoutsRecord.getDocumentFromData(
+          workoutsCreateData, workoutsRecordReference);
+      logFirebaseEvent('ActiveWorkout_refresh_database_request');
+      setState(() => _model.firestoreRequestCompleter = null);
+      logFirebaseEvent('ActiveWorkout_timer');
+      _model.timerController.onExecute.add(StopWatchExecute.start);
     });
 
-    logFirebaseEvent('screen_view',
-        parameters: {'screen_name': 'ActiveWorkout'});
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -81,7 +75,7 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
@@ -119,18 +113,29 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                 false;
             if (confirmDialogResponse) {
               logFirebaseEvent('IconButton_backend_call');
-              await currentWorkout!.reference.delete();
+              await _model.currentWorkout!.reference.delete();
               logFirebaseEvent('IconButton_navigate_back');
               Navigator.pop(context);
             }
           },
         ),
-        title: Text(
-          'Page Title',
-          style: FlutterFlowTheme.of(context).title2.override(
+        title: FlutterFlowTimer(
+          initialTime: _model.timerMilliseconds,
+          getDisplayTime: (value) =>
+              StopWatchTimer.getDisplayTime(value, milliSecond: false),
+          timer: _model.timerController,
+          updateStateInterval: Duration(milliseconds: 1000),
+          onChanged: (value, displayTime, shouldUpdate) {
+            _model.timerMilliseconds = value;
+            _model.timerValue = displayTime;
+            if (shouldUpdate) setState(() {});
+          },
+          textAlign: TextAlign.start,
+          style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 22,
+                color: FlutterFlowTheme.of(context).secondaryColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
               ),
         ),
         actions: [
@@ -160,18 +165,28 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
+                logFirebaseEvent('FinishWorkoutBtn_backend_call');
+
+                final workoutsUpdateData = createWorkoutsRecordData(
+                  endedAt: getCurrentTimestamp,
+                );
+                await _model.currentWorkout!.reference
+                    .update(workoutsUpdateData);
                 logFirebaseEvent('FinishWorkoutBtn_navigate_back');
                 Navigator.pop(context);
+              } else {
+                return;
               }
             },
             text: 'Finish',
             options: FFButtonOptions(
               height: 40,
-              color: FlutterFlowTheme.of(context).primaryColor,
+              color: Colors.transparent,
               textStyle: FlutterFlowTheme.of(context).subtitle2.override(
                     fontFamily: 'Poppins',
                     color: Colors.white,
                   ),
+              elevation: 0,
               borderSide: BorderSide(
                 color: Colors.transparent,
                 width: 1,
@@ -190,18 +205,37 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: Builder(
-                  builder: (context) {
-                    final activeWorkoutReps =
-                        getActiveWorkoutReps!.map((e) => e).toList();
+                child: FutureBuilder<List<RepetitionsRecord>>(
+                  future: (_model.firestoreRequestCompleter ??=
+                          Completer<List<RepetitionsRecord>>()
+                            ..complete(queryRepetitionsRecordOnce(
+                              parent: _model.currentWorkout!.reference,
+                            )))
+                      .future,
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                          ),
+                        ),
+                      );
+                    }
+                    List<RepetitionsRecord>
+                        repetitionsListRepetitionsRecordList = snapshot.data!;
                     return ListView.builder(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      itemCount: activeWorkoutReps.length,
-                      itemBuilder: (context, activeWorkoutRepsIndex) {
-                        final activeWorkoutRepsItem =
-                            activeWorkoutReps[activeWorkoutRepsIndex];
+                      itemCount: repetitionsListRepetitionsRecordList.length,
+                      itemBuilder: (context, repetitionsListIndex) {
+                        final repetitionsListRepetitionsRecord =
+                            repetitionsListRepetitionsRecordList[
+                                repetitionsListIndex];
                         return Padding(
                           padding:
                               EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
@@ -219,34 +253,37 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                                     .secondaryBackground,
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 16, 0, 0),
-                                    child: Text(
-                                      random_data.randomString(
-                                        0,
-                                        0,
-                                        true,
-                                        false,
-                                        false,
+                              child: InkWell(
+                                onTap: () async {
+                                  logFirebaseEvent(
+                                      'ACTIVE_WORKOUT_Column_n0kw8gkv_ON_TAP');
+                                  logFirebaseEvent('Column_update_app_state');
+                                  setState(() {});
+                                },
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16, 16, 0, 0),
+                                      child: Text(
+                                        repetitionsListRepetitionsRecord
+                                            .data.exercise!.name!,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 16, 0, 0),
-                                    child: Text(
-                                      '${activeWorkoutRepsItem.weight?.toString()} kg X ${random_data.randomInteger(0, 10).toString()} times',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16, 16, 0, 0),
+                                      child: Text(
+                                        '${repetitionsListRepetitionsRecord.data.weight?.toString()} kg X ${repetitionsListRepetitionsRecord.data.times?.toString()} times',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -291,10 +328,10 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
                                 return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        20, 20, 20, 20),
+                                    child: LinearProgressIndicator(
                                       color: FlutterFlowTheme.of(context)
                                           .primaryColor,
                                     ),
@@ -325,7 +362,7 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                                           logFirebaseEvent(
                                               'ACTIVE_WORKOUT_PAGE_Text_3isnejab_ON_TAP');
                                           logFirebaseEvent(
-                                              'Text_update_local_state');
+                                              'Text_update_app_state');
                                           setState(() {
                                             FFAppState().selectedExercise =
                                                 exercisesListPresetExercisesRecord
@@ -333,13 +370,34 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                                             FFAppState().selectedExerciseRef =
                                                 exercisesListPresetExercisesRecord
                                                     .reference;
+                                            FFAppState()
+                                                    .selectedExerciseMuscleGroup =
+                                                exercisesListPresetExercisesRecord
+                                                    .muscleGroup!;
                                           });
                                         },
                                         child: Text(
                                           exercisesListPresetExercisesRecord
                                               .name!,
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText1,
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Poppins',
+                                                color: valueOrDefault<Color>(
+                                                  exercisesListPresetExercisesRecord
+                                                              .name ==
+                                                          FFAppState()
+                                                              .selectedExercise
+                                                      ? FlutterFlowTheme.of(
+                                                              context)
+                                                          .primaryText
+                                                      : FlutterFlowTheme.of(
+                                                              context)
+                                                          .overlay,
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBtnText,
+                                                ),
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -380,7 +438,7 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                             onPressed: () async {
                               logFirebaseEvent(
                                   'ACTIVE_WORKOUT_PAGE_minus_ICN_ON_TAP');
-                              logFirebaseEvent('IconButton_update_local_state');
+                              logFirebaseEvent('IconButton_update_app_state');
                               setState(() {
                                 FFAppState().selectedWeight =
                                     FFAppState().selectedWeight + -0.5;
@@ -394,21 +452,22 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                               inactiveColor: Color(0xFF9E9E9E),
                               min: 0.5,
                               max: 500,
-                              value: weightSliderValue ??=
+                              value: _model.weightSliderValue ??=
                                   FFAppState().selectedWeight,
-                              label: weightSliderValue.toString(),
+                              label: _model.weightSliderValue.toString(),
                               divisions: 999,
                               onChanged: (newValue) async {
                                 newValue =
                                     double.parse(newValue.toStringAsFixed(4));
-                                setState(() => weightSliderValue = newValue);
+                                setState(
+                                    () => _model.weightSliderValue = newValue);
                                 logFirebaseEvent(
                                     'ACTIVE_WORKOUT_WeightSlider_ON_FORM_WIDG');
                                 logFirebaseEvent(
-                                    'WeightSlider_update_local_state');
+                                    'WeightSlider_update_app_state');
                                 setState(() {
                                   FFAppState().selectedWeight =
-                                      weightSliderValue!;
+                                      _model.weightSliderValue!;
                                 });
                               },
                             ),
@@ -426,7 +485,7 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                             onPressed: () async {
                               logFirebaseEvent(
                                   'ACTIVE_WORKOUT_PAGE_plus_ICN_ON_TAP');
-                              logFirebaseEvent('IconButton_update_local_state');
+                              logFirebaseEvent('IconButton_update_app_state');
                               setState(() {
                                 FFAppState().selectedWeight =
                                     FFAppState().selectedWeight + 0.5;
@@ -458,7 +517,7 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                             onPressed: () async {
                               logFirebaseEvent(
                                   'ACTIVE_WORKOUT_PAGE_minus_ICN_ON_TAP');
-                              logFirebaseEvent('IconButton_update_local_state');
+                              logFirebaseEvent('IconButton_update_app_state');
                               setState(() {
                                 FFAppState().selectedRepCount =
                                     FFAppState().selectedRepCount + -1.0;
@@ -472,21 +531,21 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                               inactiveColor: Color(0xFF9E9E9E),
                               min: 1,
                               max: 50,
-                              value: repsSliderValue ??=
+                              value: _model.repsSliderValue ??=
                                   FFAppState().selectedRepCount,
-                              label: repsSliderValue.toString(),
+                              label: _model.repsSliderValue.toString(),
                               divisions: 49,
                               onChanged: (newValue) async {
                                 newValue =
                                     double.parse(newValue.toStringAsFixed(0));
-                                setState(() => repsSliderValue = newValue);
+                                setState(
+                                    () => _model.repsSliderValue = newValue);
                                 logFirebaseEvent(
                                     'ACTIVE_WORKOUT_RepsSlider_ON_FORM_WIDGET');
-                                logFirebaseEvent(
-                                    'RepsSlider_update_local_state');
+                                logFirebaseEvent('RepsSlider_update_app_state');
                                 FFAppState().update(() {
                                   FFAppState().selectedRepCount =
-                                      repsSliderValue!;
+                                      _model.repsSliderValue!;
                                 });
                               },
                             ),
@@ -504,7 +563,7 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                             onPressed: () async {
                               logFirebaseEvent(
                                   'ACTIVE_WORKOUT_PAGE_plus_ICN_ON_TAP');
-                              logFirebaseEvent('IconButton_update_local_state');
+                              logFirebaseEvent('IconButton_update_app_state');
                               setState(() {
                                 FFAppState().selectedRepCount =
                                     FFAppState().selectedRepCount + 1.0;
@@ -516,28 +575,54 @@ class _ActiveWorkoutWidgetState extends State<ActiveWorkoutWidget> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                         child: FFButtonWidget(
-                          onPressed: () async {
-                            logFirebaseEvent(
-                                'ACTIVE_WORKOUT_PAGE_ButtonAdd_ON_TAP');
-                            logFirebaseEvent('ButtonAdd_backend_call');
+                          onPressed: FFAppState().selectedExercise == null ||
+                                  FFAppState().selectedExercise == ''
+                              ? null
+                              : () async {
+                                  logFirebaseEvent(
+                                      'ACTIVE_WORKOUT_PAGE_ButtonAdd_ON_TAP');
+                                  logFirebaseEvent('ButtonAdd_backend_call');
 
-                            final workoutsUpdateData = {
-                              'repetitions': FieldValue.arrayUnion([
-                                getRepetitionFirestoreData(
-                                  createRepetitionStruct(
-                                    weight: weightSliderValue,
-                                    exercise: FFAppState().selectedExerciseRef,
-                                    times: repsSliderValue,
-                                    clearUnsetFields: false,
-                                  ),
-                                  true,
-                                )
-                              ]),
-                            };
-                            await currentWorkout!.reference
-                                .update(workoutsUpdateData);
-                          },
-                          text: 'Add\n',
+                                  final repetitionsCreateData =
+                                      createRepetitionsRecordData(
+                                    data: createRepetitionStruct(
+                                      weight: _model.weightSliderValue,
+                                      times: _model.repsSliderValue,
+                                      exercise: createExerciseStruct(
+                                        name: FFAppState().selectedExercise,
+                                        clearUnsetFields: false,
+                                        create: true,
+                                      ),
+                                      clearUnsetFields: false,
+                                      create: true,
+                                    ),
+                                    exerciseRef:
+                                        FFAppState().selectedExerciseRef,
+                                  );
+                                  await RepetitionsRecord.createDoc(
+                                          _model.currentWorkout!.reference)
+                                      .set(repetitionsCreateData);
+                                  logFirebaseEvent('ButtonAdd_backend_call');
+
+                                  final workoutsUpdateData = {
+                                    'totalLifted': FieldValue.increment(
+                                        functions.getTotalRepWeight(
+                                            _model.weightSliderValue!,
+                                            _model.repsSliderValue!)),
+                                    'muscleGroups': FieldValue.arrayUnion([
+                                      FFAppState().selectedExerciseMuscleGroup
+                                    ]),
+                                  };
+                                  await _model.currentWorkout!.reference
+                                      .update(workoutsUpdateData);
+                                  logFirebaseEvent(
+                                      'ButtonAdd_refresh_database_request');
+                                  setState(() =>
+                                      _model.firestoreRequestCompleter = null);
+                                  await _model
+                                      .waitForFirestoreRequestCompleter();
+                                },
+                          text: 'Add',
                           options: FFButtonOptions(
                             width: 130,
                             height: 40,

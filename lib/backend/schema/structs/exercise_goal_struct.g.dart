@@ -24,6 +24,9 @@ class _$ExerciseGoalStructSerializer
       'target',
       serializers.serialize(object.target,
           specifiedType: const FullType(ExerciseGoalTargetStruct)),
+      'exercise',
+      serializers.serialize(object.exercise,
+          specifiedType: const FullType(ExerciseStruct)),
       'firestoreUtilData',
       serializers.serialize(object.firestoreUtilData,
           specifiedType: const FullType(FirestoreUtilData)),
@@ -42,14 +45,6 @@ class _$ExerciseGoalStructSerializer
         ..add('completedAt')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
-    }
-    value = object.exerciseType;
-    if (value != null) {
-      result
-        ..add('exerciseType')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                DocumentReference, const [const FullType.nullable(Object)])));
     }
     return result;
   }
@@ -79,11 +74,10 @@ class _$ExerciseGoalStructSerializer
           result.completedAt = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
-        case 'exerciseType':
-          result.exerciseType = serializers.deserialize(value,
-              specifiedType: const FullType(DocumentReference, const [
-                const FullType.nullable(Object)
-              ])) as DocumentReference<Object?>?;
+        case 'exercise':
+          result.exercise.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ExerciseStruct))!
+              as ExerciseStruct);
           break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
@@ -105,7 +99,7 @@ class _$ExerciseGoalStruct extends ExerciseGoalStruct {
   @override
   final DateTime? completedAt;
   @override
-  final DocumentReference<Object?>? exerciseType;
+  final ExerciseStruct exercise;
   @override
   final FirestoreUtilData firestoreUtilData;
 
@@ -117,11 +111,13 @@ class _$ExerciseGoalStruct extends ExerciseGoalStruct {
       {this.createdAt,
       required this.target,
       this.completedAt,
-      this.exerciseType,
+      required this.exercise,
       required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         target, r'ExerciseGoalStruct', 'target');
+    BuiltValueNullFieldError.checkNotNull(
+        exercise, r'ExerciseGoalStruct', 'exercise');
     BuiltValueNullFieldError.checkNotNull(
         firestoreUtilData, r'ExerciseGoalStruct', 'firestoreUtilData');
   }
@@ -142,7 +138,7 @@ class _$ExerciseGoalStruct extends ExerciseGoalStruct {
         createdAt == other.createdAt &&
         target == other.target &&
         completedAt == other.completedAt &&
-        exerciseType == other.exerciseType &&
+        exercise == other.exercise &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
@@ -152,7 +148,7 @@ class _$ExerciseGoalStruct extends ExerciseGoalStruct {
         $jc(
             $jc($jc($jc(0, createdAt.hashCode), target.hashCode),
                 completedAt.hashCode),
-            exerciseType.hashCode),
+            exercise.hashCode),
         firestoreUtilData.hashCode));
   }
 
@@ -162,7 +158,7 @@ class _$ExerciseGoalStruct extends ExerciseGoalStruct {
           ..add('createdAt', createdAt)
           ..add('target', target)
           ..add('completedAt', completedAt)
-          ..add('exerciseType', exerciseType)
+          ..add('exercise', exercise)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -186,10 +182,10 @@ class ExerciseGoalStructBuilder
   DateTime? get completedAt => _$this._completedAt;
   set completedAt(DateTime? completedAt) => _$this._completedAt = completedAt;
 
-  DocumentReference<Object?>? _exerciseType;
-  DocumentReference<Object?>? get exerciseType => _$this._exerciseType;
-  set exerciseType(DocumentReference<Object?>? exerciseType) =>
-      _$this._exerciseType = exerciseType;
+  ExerciseStructBuilder? _exercise;
+  ExerciseStructBuilder get exercise =>
+      _$this._exercise ??= new ExerciseStructBuilder();
+  set exercise(ExerciseStructBuilder? exercise) => _$this._exercise = exercise;
 
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
@@ -206,7 +202,7 @@ class ExerciseGoalStructBuilder
       _createdAt = $v.createdAt;
       _target = $v.target.toBuilder();
       _completedAt = $v.completedAt;
-      _exerciseType = $v.exerciseType;
+      _exercise = $v.exercise.toBuilder();
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -235,7 +231,7 @@ class ExerciseGoalStructBuilder
               createdAt: createdAt,
               target: target.build(),
               completedAt: completedAt,
-              exerciseType: exerciseType,
+              exercise: exercise.build(),
               firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
                   firestoreUtilData,
                   r'ExerciseGoalStruct',
@@ -245,6 +241,9 @@ class ExerciseGoalStructBuilder
       try {
         _$failedField = 'target';
         target.build();
+
+        _$failedField = 'exercise';
+        exercise.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'ExerciseGoalStruct', _$failedField, e.toString());

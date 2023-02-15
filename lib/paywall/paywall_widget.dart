@@ -3,6 +3,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'paywall_model.dart';
+export 'paywall_model.dart';
 
 class PaywallWidget extends StatefulWidget {
   const PaywallWidget({Key? key}) : super(key: key);
@@ -12,17 +14,23 @@ class PaywallWidget extends StatefulWidget {
 }
 
 class _PaywallWidgetState extends State<PaywallWidget> {
-  final _unfocusNode = FocusNode();
+  late PaywallModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => PaywallModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Paywall'});
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -35,7 +43,7 @@ class _PaywallWidgetState extends State<PaywallWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         title: Text(
           'Paywall',

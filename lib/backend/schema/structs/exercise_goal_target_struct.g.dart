@@ -36,18 +36,19 @@ class _$ExerciseGoalTargetStructSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.repetitions;
-    if (value != null) {
-      result
-        ..add('repetitions')
-        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
-    }
     value = object.both;
     if (value != null) {
       result
         ..add('both')
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.repetitions;
+    if (value != null) {
+      result
+        ..add('repetitions')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
     }
     return result;
   }
@@ -68,13 +69,13 @@ class _$ExerciseGoalTargetStructSerializer
           result.weight = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
-        case 'repetitions':
-          result.repetitions = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
-          break;
         case 'both':
           result.both = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'repetitions':
+          result.repetitions = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
           break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
@@ -92,9 +93,9 @@ class _$ExerciseGoalTargetStruct extends ExerciseGoalTargetStruct {
   @override
   final double? weight;
   @override
-  final int? repetitions;
-  @override
   final bool? both;
+  @override
+  final double? repetitions;
   @override
   final FirestoreUtilData firestoreUtilData;
 
@@ -104,8 +105,8 @@ class _$ExerciseGoalTargetStruct extends ExerciseGoalTargetStruct {
 
   _$ExerciseGoalTargetStruct._(
       {this.weight,
-      this.repetitions,
       this.both,
+      this.repetitions,
       required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -126,15 +127,15 @@ class _$ExerciseGoalTargetStruct extends ExerciseGoalTargetStruct {
     if (identical(other, this)) return true;
     return other is ExerciseGoalTargetStruct &&
         weight == other.weight &&
-        repetitions == other.repetitions &&
         both == other.both &&
+        repetitions == other.repetitions &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, weight.hashCode), repetitions.hashCode), both.hashCode),
+        $jc($jc($jc(0, weight.hashCode), both.hashCode), repetitions.hashCode),
         firestoreUtilData.hashCode));
   }
 
@@ -142,8 +143,8 @@ class _$ExerciseGoalTargetStruct extends ExerciseGoalTargetStruct {
   String toString() {
     return (newBuiltValueToStringHelper(r'ExerciseGoalTargetStruct')
           ..add('weight', weight)
-          ..add('repetitions', repetitions)
           ..add('both', both)
+          ..add('repetitions', repetitions)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -158,13 +159,13 @@ class ExerciseGoalTargetStructBuilder
   double? get weight => _$this._weight;
   set weight(double? weight) => _$this._weight = weight;
 
-  int? _repetitions;
-  int? get repetitions => _$this._repetitions;
-  set repetitions(int? repetitions) => _$this._repetitions = repetitions;
-
   bool? _both;
   bool? get both => _$this._both;
   set both(bool? both) => _$this._both = both;
+
+  double? _repetitions;
+  double? get repetitions => _$this._repetitions;
+  set repetitions(double? repetitions) => _$this._repetitions = repetitions;
 
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
@@ -179,8 +180,8 @@ class ExerciseGoalTargetStructBuilder
     final $v = _$v;
     if ($v != null) {
       _weight = $v.weight;
-      _repetitions = $v.repetitions;
       _both = $v.both;
+      _repetitions = $v.repetitions;
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -205,8 +206,8 @@ class ExerciseGoalTargetStructBuilder
     final _$result = _$v ??
         new _$ExerciseGoalTargetStruct._(
             weight: weight,
-            repetitions: repetitions,
             both: both,
+            repetitions: repetitions,
             firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
                 firestoreUtilData,
                 r'ExerciseGoalTargetStruct',

@@ -11,35 +11,26 @@ abstract class WorkoutsRecord
   static Serializer<WorkoutsRecord> get serializer =>
       _$workoutsRecordSerializer;
 
-  DateTime? get date;
+  DateTime? get startedAt;
 
-  int? get duration;
-
-  BuiltList<RepetitionStruct>? get repetitions;
+  DateTime? get endedAt;
 
   double? get totalLifted;
 
-  int? get totalExercises;
+  DocumentReference? get userRef;
+
+  BuiltList<String>? get muscleGroups;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
 
-  DocumentReference get parentReference => reference.parent.parent!;
-
   static void _initializeBuilder(WorkoutsRecordBuilder builder) => builder
-    ..duration = 0
-    ..repetitions = ListBuilder()
     ..totalLifted = 0.0
-    ..totalExercises = 0;
+    ..muscleGroups = ListBuilder();
 
-  static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
-      parent != null
-          ? parent.collection('workouts')
-          : FirebaseFirestore.instance.collectionGroup('workouts');
-
-  static DocumentReference createDoc(DocumentReference parent) =>
-      parent.collection('workouts').doc();
+  static CollectionReference get collection =>
+      FirebaseFirestore.instance.collection('workouts');
 
   static Stream<WorkoutsRecord> getDocument(DocumentReference ref) => ref
       .snapshots()
@@ -60,20 +51,20 @@ abstract class WorkoutsRecord
 }
 
 Map<String, dynamic> createWorkoutsRecordData({
-  DateTime? date,
-  int? duration,
+  DateTime? startedAt,
+  DateTime? endedAt,
   double? totalLifted,
-  int? totalExercises,
+  DocumentReference? userRef,
 }) {
   final firestoreData = serializers.toFirestore(
     WorkoutsRecord.serializer,
     WorkoutsRecord(
       (w) => w
-        ..date = date
-        ..duration = duration
-        ..repetitions = null
+        ..startedAt = startedAt
+        ..endedAt = endedAt
         ..totalLifted = totalLifted
-        ..totalExercises = totalExercises,
+        ..userRef = userRef
+        ..muscleGroups = null,
     ),
   );
 

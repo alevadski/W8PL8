@@ -20,6 +20,12 @@ class _$RepetitionStructSerializer
   Iterable<Object?> serialize(Serializers serializers, RepetitionStruct object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
+      'exercise',
+      serializers.serialize(object.exercise,
+          specifiedType: const FullType(ExerciseStruct)),
+      'muscleGroup',
+      serializers.serialize(object.muscleGroup,
+          specifiedType: const FullType(MuscleGroupStruct)),
       'firestoreUtilData',
       serializers.serialize(object.firestoreUtilData,
           specifiedType: const FullType(FirestoreUtilData)),
@@ -32,27 +38,12 @@ class _$RepetitionStructSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.exercise;
-    if (value != null) {
-      result
-        ..add('exercise')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                DocumentReference, const [const FullType.nullable(Object)])));
-    }
     value = object.times;
     if (value != null) {
       result
         ..add('times')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
-    }
-    value = object.name;
-    if (value != null) {
-      result
-        ..add('name')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -73,19 +64,19 @@ class _$RepetitionStructSerializer
           result.weight = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
-        case 'exercise':
-          result.exercise = serializers.deserialize(value,
-              specifiedType: const FullType(DocumentReference, const [
-                const FullType.nullable(Object)
-              ])) as DocumentReference<Object?>?;
-          break;
         case 'times':
           result.times = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+        case 'exercise':
+          result.exercise.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(ExerciseStruct))!
+              as ExerciseStruct);
+          break;
+        case 'muscleGroup':
+          result.muscleGroup.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(MuscleGroupStruct))!
+              as MuscleGroupStruct);
           break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
@@ -103,11 +94,11 @@ class _$RepetitionStruct extends RepetitionStruct {
   @override
   final double? weight;
   @override
-  final DocumentReference<Object?>? exercise;
-  @override
   final double? times;
   @override
-  final String? name;
+  final ExerciseStruct exercise;
+  @override
+  final MuscleGroupStruct muscleGroup;
   @override
   final FirestoreUtilData firestoreUtilData;
 
@@ -117,11 +108,15 @@ class _$RepetitionStruct extends RepetitionStruct {
 
   _$RepetitionStruct._(
       {this.weight,
-      this.exercise,
       this.times,
-      this.name,
+      required this.exercise,
+      required this.muscleGroup,
       required this.firestoreUtilData})
       : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        exercise, r'RepetitionStruct', 'exercise');
+    BuiltValueNullFieldError.checkNotNull(
+        muscleGroup, r'RepetitionStruct', 'muscleGroup');
     BuiltValueNullFieldError.checkNotNull(
         firestoreUtilData, r'RepetitionStruct', 'firestoreUtilData');
   }
@@ -139,9 +134,9 @@ class _$RepetitionStruct extends RepetitionStruct {
     if (identical(other, this)) return true;
     return other is RepetitionStruct &&
         weight == other.weight &&
-        exercise == other.exercise &&
         times == other.times &&
-        name == other.name &&
+        exercise == other.exercise &&
+        muscleGroup == other.muscleGroup &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
@@ -149,9 +144,9 @@ class _$RepetitionStruct extends RepetitionStruct {
   int get hashCode {
     return $jf($jc(
         $jc(
-            $jc($jc($jc(0, weight.hashCode), exercise.hashCode),
-                times.hashCode),
-            name.hashCode),
+            $jc($jc($jc(0, weight.hashCode), times.hashCode),
+                exercise.hashCode),
+            muscleGroup.hashCode),
         firestoreUtilData.hashCode));
   }
 
@@ -159,9 +154,9 @@ class _$RepetitionStruct extends RepetitionStruct {
   String toString() {
     return (newBuiltValueToStringHelper(r'RepetitionStruct')
           ..add('weight', weight)
-          ..add('exercise', exercise)
           ..add('times', times)
-          ..add('name', name)
+          ..add('exercise', exercise)
+          ..add('muscleGroup', muscleGroup)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -175,18 +170,20 @@ class RepetitionStructBuilder
   double? get weight => _$this._weight;
   set weight(double? weight) => _$this._weight = weight;
 
-  DocumentReference<Object?>? _exercise;
-  DocumentReference<Object?>? get exercise => _$this._exercise;
-  set exercise(DocumentReference<Object?>? exercise) =>
-      _$this._exercise = exercise;
-
   double? _times;
   double? get times => _$this._times;
   set times(double? times) => _$this._times = times;
 
-  String? _name;
-  String? get name => _$this._name;
-  set name(String? name) => _$this._name = name;
+  ExerciseStructBuilder? _exercise;
+  ExerciseStructBuilder get exercise =>
+      _$this._exercise ??= new ExerciseStructBuilder();
+  set exercise(ExerciseStructBuilder? exercise) => _$this._exercise = exercise;
+
+  MuscleGroupStructBuilder? _muscleGroup;
+  MuscleGroupStructBuilder get muscleGroup =>
+      _$this._muscleGroup ??= new MuscleGroupStructBuilder();
+  set muscleGroup(MuscleGroupStructBuilder? muscleGroup) =>
+      _$this._muscleGroup = muscleGroup;
 
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
@@ -201,9 +198,9 @@ class RepetitionStructBuilder
     final $v = _$v;
     if ($v != null) {
       _weight = $v.weight;
-      _exercise = $v.exercise;
       _times = $v.times;
-      _name = $v.name;
+      _exercise = $v.exercise.toBuilder();
+      _muscleGroup = $v.muscleGroup.toBuilder();
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -225,14 +222,29 @@ class RepetitionStructBuilder
   RepetitionStruct build() => _build();
 
   _$RepetitionStruct _build() {
-    final _$result = _$v ??
-        new _$RepetitionStruct._(
-            weight: weight,
-            exercise: exercise,
-            times: times,
-            name: name,
-            firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
-                firestoreUtilData, r'RepetitionStruct', 'firestoreUtilData'));
+    _$RepetitionStruct _$result;
+    try {
+      _$result = _$v ??
+          new _$RepetitionStruct._(
+              weight: weight,
+              times: times,
+              exercise: exercise.build(),
+              muscleGroup: muscleGroup.build(),
+              firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
+                  firestoreUtilData, r'RepetitionStruct', 'firestoreUtilData'));
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'exercise';
+        exercise.build();
+        _$failedField = 'muscleGroup';
+        muscleGroup.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'RepetitionStruct', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

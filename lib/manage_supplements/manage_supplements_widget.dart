@@ -9,6 +9,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'manage_supplements_model.dart';
+export 'manage_supplements_model.dart';
 
 class ManageSupplementsWidget extends StatefulWidget {
   const ManageSupplementsWidget({Key? key}) : super(key: key);
@@ -19,18 +21,24 @@ class ManageSupplementsWidget extends StatefulWidget {
 }
 
 class _ManageSupplementsWidgetState extends State<ManageSupplementsWidget> {
-  final _unfocusNode = FocusNode();
+  late ManageSupplementsModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => ManageSupplementsModel());
+
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'ManageSupplements'});
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -62,7 +70,7 @@ class _ManageSupplementsWidgetState extends State<ManageSupplementsWidget> {
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
             leading: FlutterFlowIconButton(
               borderColor: Colors.transparent,
@@ -82,11 +90,7 @@ class _ManageSupplementsWidgetState extends State<ManageSupplementsWidget> {
             ),
             title: Text(
               'Manage Supplements',
-              style: FlutterFlowTheme.of(context).title2.override(
-                    fontFamily: 'Poppins',
-                    color: Colors.white,
-                    fontSize: 22,
-                  ),
+              style: FlutterFlowTheme.of(context).title3,
             ),
             actions: [
               FlutterFlowIconButton(

@@ -4,10 +4,13 @@ export 'package:built_collection/built_collection.dart';
 export 'package:flutter/material.dart' show Color, Colors;
 export '../../flutter_flow/lat_lng.dart';
 
+export 'structs/exercise_struct.dart';
 export 'structs/exercise_goal_struct.dart';
 export 'structs/exercise_goal_target_struct.dart';
 export 'structs/goals_struct.dart';
+export 'structs/muscle_group_struct.dart';
 export 'structs/repetition_struct.dart';
+export 'structs/set_struct.dart';
 export 'structs/streak_goal_struct.dart';
 export 'structs/supplement_intake_struct.dart';
 export 'structs/supplement_type_struct.dart';

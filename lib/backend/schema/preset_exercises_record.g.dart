@@ -46,6 +46,13 @@ class _$PresetExercisesRecordSerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.muscleGroup;
+    if (value != null) {
+      result
+        ..add('muscleGroup')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -81,6 +88,10 @@ class _$PresetExercisesRecordSerializer
           result.isBodyWeight = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'muscleGroup':
+          result.muscleGroup = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -102,6 +113,8 @@ class _$PresetExercisesRecord extends PresetExercisesRecord {
   @override
   final bool? isBodyWeight;
   @override
+  final String? muscleGroup;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$PresetExercisesRecord(
@@ -109,7 +122,11 @@ class _$PresetExercisesRecord extends PresetExercisesRecord {
       (new PresetExercisesRecordBuilder()..update(updates))._build();
 
   _$PresetExercisesRecord._(
-      {this.name, this.isDoubleWeight, this.isBodyWeight, this.ffRef})
+      {this.name,
+      this.isDoubleWeight,
+      this.isBodyWeight,
+      this.muscleGroup,
+      this.ffRef})
       : super._();
 
   @override
@@ -128,14 +145,17 @@ class _$PresetExercisesRecord extends PresetExercisesRecord {
         name == other.name &&
         isDoubleWeight == other.isDoubleWeight &&
         isBodyWeight == other.isBodyWeight &&
+        muscleGroup == other.muscleGroup &&
         ffRef == other.ffRef;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc(0, name.hashCode), isDoubleWeight.hashCode),
-            isBodyWeight.hashCode),
+        $jc(
+            $jc($jc($jc(0, name.hashCode), isDoubleWeight.hashCode),
+                isBodyWeight.hashCode),
+            muscleGroup.hashCode),
         ffRef.hashCode));
   }
 
@@ -145,6 +165,7 @@ class _$PresetExercisesRecord extends PresetExercisesRecord {
           ..add('name', name)
           ..add('isDoubleWeight', isDoubleWeight)
           ..add('isBodyWeight', isBodyWeight)
+          ..add('muscleGroup', muscleGroup)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -167,6 +188,10 @@ class PresetExercisesRecordBuilder
   bool? get isBodyWeight => _$this._isBodyWeight;
   set isBodyWeight(bool? isBodyWeight) => _$this._isBodyWeight = isBodyWeight;
 
+  String? _muscleGroup;
+  String? get muscleGroup => _$this._muscleGroup;
+  set muscleGroup(String? muscleGroup) => _$this._muscleGroup = muscleGroup;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -181,6 +206,7 @@ class PresetExercisesRecordBuilder
       _name = $v.name;
       _isDoubleWeight = $v.isDoubleWeight;
       _isBodyWeight = $v.isBodyWeight;
+      _muscleGroup = $v.muscleGroup;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -207,6 +233,7 @@ class PresetExercisesRecordBuilder
             name: name,
             isDoubleWeight: isDoubleWeight,
             isBodyWeight: isBodyWeight,
+            muscleGroup: muscleGroup,
             ffRef: ffRef);
     replace(_$result);
     return _$result;

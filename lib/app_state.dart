@@ -75,6 +75,12 @@ class FFAppState extends ChangeNotifier {
         _customSupColors.map((x) => x.value.toString()).toList());
   }
 
+  void removeAtIndexFromCustomSupColors(int _index) {
+    _customSupColors.removeAt(_index);
+    prefs.setStringList('ff_customSupColors',
+        _customSupColors.map((x) => x.value.toString()).toList());
+  }
+
   Color _lastAddedCustomSupColor = Colors.transparent;
   Color get lastAddedCustomSupColor => _lastAddedCustomSupColor;
   set lastAddedCustomSupColor(Color _value) {
@@ -121,6 +127,97 @@ class FFAppState extends ChangeNotifier {
   double get selectedRepCount => _selectedRepCount;
   set selectedRepCount(double _value) {
     _selectedRepCount = _value;
+  }
+
+  DateTime? _activeWorkoutStartTimestamp;
+  DateTime? get activeWorkoutStartTimestamp => _activeWorkoutStartTimestamp;
+  set activeWorkoutStartTimestamp(DateTime? _value) {
+    _activeWorkoutStartTimestamp = _value;
+  }
+
+  double _activeWorkoutTotalLifted = 0.0;
+  double get activeWorkoutTotalLifted => _activeWorkoutTotalLifted;
+  set activeWorkoutTotalLifted(double _value) {
+    _activeWorkoutTotalLifted = _value;
+  }
+
+  int _activeWorkoutTotalExercises = 0;
+  int get activeWorkoutTotalExercises => _activeWorkoutTotalExercises;
+  set activeWorkoutTotalExercises(int _value) {
+    _activeWorkoutTotalExercises = _value;
+  }
+
+  String _selectedExerciseMuscleGroup = '';
+  String get selectedExerciseMuscleGroup => _selectedExerciseMuscleGroup;
+  set selectedExerciseMuscleGroup(String _value) {
+    _selectedExerciseMuscleGroup = _value;
+  }
+
+  List<bool> _supColorSelectorStates = [false, false, false, false, false];
+  List<bool> get supColorSelectorStates => _supColorSelectorStates;
+  set supColorSelectorStates(List<bool> _value) {
+    _supColorSelectorStates = _value;
+  }
+
+  void addToSupColorSelectorStates(bool _value) {
+    _supColorSelectorStates.add(_value);
+  }
+
+  void removeFromSupColorSelectorStates(bool _value) {
+    _supColorSelectorStates.remove(_value);
+  }
+
+  void removeAtIndexFromSupColorSelectorStates(int _index) {
+    _supColorSelectorStates.removeAt(_index);
+  }
+
+  bool _goalTargetBoth = false;
+  bool get goalTargetBoth => _goalTargetBoth;
+  set goalTargetBoth(bool _value) {
+    _goalTargetBoth = _value;
+  }
+
+  DocumentReference? _goalSelectedExerciseRef;
+  DocumentReference? get goalSelectedExerciseRef => _goalSelectedExerciseRef;
+  set goalSelectedExerciseRef(DocumentReference? _value) {
+    _goalSelectedExerciseRef = _value;
+  }
+
+  String _goalSelectedExercise = '';
+  String get goalSelectedExercise => _goalSelectedExercise;
+  set goalSelectedExercise(String _value) {
+    _goalSelectedExercise = _value;
+  }
+
+  bool _goalTargetReps = false;
+  bool get goalTargetReps => _goalTargetReps;
+  set goalTargetReps(bool _value) {
+    _goalTargetReps = _value;
+  }
+
+  double _goalSelectedRepCount = 20;
+  double get goalSelectedRepCount => _goalSelectedRepCount;
+  set goalSelectedRepCount(double _value) {
+    _goalSelectedRepCount = _value;
+  }
+
+  double _goalSelectedWeight = 40;
+  double get goalSelectedWeight => _goalSelectedWeight;
+  set goalSelectedWeight(double _value) {
+    _goalSelectedWeight = _value;
+  }
+
+  DateTime? _constantTimestampZero =
+      DateTime.fromMillisecondsSinceEpoch(-3600000);
+  DateTime? get constantTimestampZero => _constantTimestampZero;
+  set constantTimestampZero(DateTime? _value) {
+    _constantTimestampZero = _value;
+  }
+
+  double _selectedSetCount = 4;
+  double get selectedSetCount => _selectedSetCount;
+  set selectedSetCount(double _value) {
+    _selectedSetCount = _value;
   }
 }
 

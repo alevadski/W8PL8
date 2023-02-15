@@ -1,6 +1,8 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/add_sup_intake_widget.dart';
+import '../components/edit_sup_action_sheet_widget.dart';
+import '../components/empty_list_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -9,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'supplements_model.dart';
+export 'supplements_model.dart';
 
 class SupplementsWidget extends StatefulWidget {
   const SupplementsWidget({Key? key}) : super(key: key);
@@ -18,17 +22,23 @@ class SupplementsWidget extends StatefulWidget {
 }
 
 class _SupplementsWidgetState extends State<SupplementsWidget> {
-  final _unfocusNode = FocusNode();
+  late SupplementsModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => SupplementsModel());
+
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Supplements'});
   }
 
   @override
   void dispose() {
+    _model.dispose();
+
     _unfocusNode.dispose();
     super.dispose();
   }
@@ -77,7 +87,7 @@ class _SupplementsWidgetState extends State<SupplementsWidget> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         title: Align(
           alignment: AlignmentDirectional(0, -1),
@@ -143,6 +153,15 @@ class _SupplementsWidgetState extends State<SupplementsWidget> {
                     List<SupplementIntakesRecord>
                         supsIntakeListSupplementIntakesRecordList =
                         snapshot.data!;
+                    if (supsIntakeListSupplementIntakesRecordList.isEmpty) {
+                      return Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          child: EmptyListViewWidget(),
+                        ),
+                      );
+                    }
                     return ListView.builder(
                       padding: EdgeInsets.zero,
                       primary: false,
@@ -229,10 +248,33 @@ class _SupplementsWidgetState extends State<SupplementsWidget> {
                                   onPressed: () async {
                                     logFirebaseEvent(
                                         'SUPPLEMENTS_PAGE_ellipsisV_ICN_ON_TAP');
-                                    logFirebaseEvent('IconButton_backend_call');
-                                    await supsIntakeListSupplementIntakesRecord
-                                        .reference
-                                        .delete();
+                                    logFirebaseEvent('IconButton_bottom_sheet');
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return Padding(
+                                          padding:
+                                              MediaQuery.of(context).viewInsets,
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.4,
+                                            child: EditSupActionSheetWidget(
+                                              itemRef:
+                                                  supsIntakeListSupplementIntakesRecord
+                                                      .reference,
+                                              data:
+                                                  supsIntakeListSupplementIntakesRecord
+                                                      .data,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => setState(() {}));
                                   },
                                 ),
                               ],

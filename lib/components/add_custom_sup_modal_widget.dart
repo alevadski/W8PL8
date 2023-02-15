@@ -8,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'add_custom_sup_modal_model.dart';
+export 'add_custom_sup_modal_model.dart';
 
 class AddCustomSupModalWidget extends StatefulWidget {
   const AddCustomSupModalWidget({Key? key}) : super(key: key);
@@ -18,18 +20,26 @@ class AddCustomSupModalWidget extends StatefulWidget {
 }
 
 class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
-  CustomSupplementsRecord? updateUserCustomSups;
-  TextEditingController? textController;
+  late AddCustomSupModalModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    _model = createModel(context, () => AddCustomSupModalModel());
+
+    _model.textController = TextEditingController();
   }
 
   @override
   void dispose() {
-    textController?.dispose();
+    _model.dispose();
+
     super.dispose();
   }
 
@@ -82,7 +92,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                 ],
               ),
               TextFormField(
-                controller: textController,
+                controller: _model.textController,
                 autofocus: true,
                 obscureText: false,
                 decoration: InputDecoration(
@@ -130,6 +140,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                   ),
                 ),
                 style: FlutterFlowTheme.of(context).bodyText1,
+                validator: _model.textControllerValidator.asValidator(context),
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,
@@ -139,7 +150,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                     onPressed: () async {
                       logFirebaseEvent(
                           'ADD_CUSTOM_SUP_MODAL_COMP_Button_ON_TAP');
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().lastAddedCustomSupColor =
                           FFAppState().customSupColors[0];
                     },
@@ -154,7 +165,9 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                                 color: Colors.white,
                               ),
                       borderSide: BorderSide(
-                        color: Colors.transparent,
+                        color: FFAppState().supColorSelectorStates[0]
+                            ? FlutterFlowTheme.of(context).alternate
+                            : Color(0x00000000),
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(20),
@@ -163,7 +176,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                   FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent('ADD_CUSTOM_SUP_MODAL_COMP__BTN_ON_TAP');
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().lastAddedCustomSupColor =
                           FFAppState().customSupColors[1];
                     },
@@ -186,7 +199,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                   FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent('ADD_CUSTOM_SUP_MODAL_COMP__BTN_ON_TAP');
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().lastAddedCustomSupColor =
                           FFAppState().customSupColors[2];
                     },
@@ -210,7 +223,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                   FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent('ADD_CUSTOM_SUP_MODAL_COMP__BTN_ON_TAP');
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().lastAddedCustomSupColor =
                           FFAppState().customSupColors[3];
                     },
@@ -234,7 +247,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                   FFButtonWidget(
                     onPressed: () async {
                       logFirebaseEvent('ADD_CUSTOM_SUP_MODAL_COMP__BTN_ON_TAP');
-                      logFirebaseEvent('Button_update_local_state');
+                      logFirebaseEvent('Button_update_app_state');
                       FFAppState().lastAddedCustomSupColor =
                           FFAppState().customSupColors[4];
                     },
@@ -267,7 +280,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                     final customSupplementsCreateData =
                         createCustomSupplementsRecordData(
                       data: createSupplementTypeStruct(
-                        name: textController!.text,
+                        name: _model.textController.text,
                         color: FFAppState().lastAddedCustomSupColor,
                         clearUnsetFields: false,
                         create: true,
@@ -278,7 +291,7 @@ class _AddCustomSupModalWidgetState extends State<AddCustomSupModalWidget> {
                             currentUserReference!);
                     await customSupplementsRecordReference
                         .set(customSupplementsCreateData);
-                    updateUserCustomSups =
+                    _model.updateUserCustomSups =
                         CustomSupplementsRecord.getDocumentFromData(
                             customSupplementsCreateData,
                             customSupplementsRecordReference);
